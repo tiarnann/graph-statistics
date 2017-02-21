@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\n#include <stdio.h>\n#include <stdlib.h>\n#include <R.h>\n#include \"utils.h\"\n#include \"paths.h\"\n\n\nvoid cycleCensusID_R(int *id[],int *g, int *pn, int *pm, double *count, double *cccount, int *pmaxlen, int *pdirected, int *pbyvertex, int *pcocycles)\n/*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether cycle co-membership counts should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurse.*/\n{\n  int i,r,c,n,m;\n  double *dval;\n  snaNet *ng;\n\n  GetRNGstate();\n  /*Allocate memory for the new graph object*/\n  /*Rprintf(\"Initializing ng\\n\");*/\n  n=(*pn);\n  m=(*pm);\n  ng=(snaNet *)R_alloc(1,sizeof(struct snaNettype));\n  ng->n=(*pn);\n  ng->indeg=(int *)R_alloc(n,sizeof(int));\n  ng->outdeg=(int *)R_alloc(n,sizeof(int));\n  ng->iel=(slelement **)R_alloc(n,sizeof(slelement *));\n  ng->oel=(slelement **)R_alloc(n,sizeof(slelement *));\n\n  /*Initialize the graph*/\n  for(i=0;i<n;i++){\n    ng->indeg[i]=0;\n    ng->outdeg[i]=0;\n    ng->iel[i]=NULL;\n    ng->oel[i]=NULL;\n  }\n\n  /*Walk the graph, adding edges and accumulating cycles*/\n  /*Rprintf(\"Building graph/accumulating cycles\\n\\tn=%d,%d\\n\",n,ng->n);*/\n  for(i=0;i<m;i++)\n    if((!IISNA(g[i+2*m]))&&((*pdirected)||(g[i]<g[i+m]))){\n      r=g[i]-1;\n      c=g[i+m]-1;\n      /*First, accumulate the cycles to be formed by the (r,c) edge*/\n      /*Rprintf(\"\\tEdge at (%d,%d); counting cycles\\n\",r+1,c+1);*/\n      edgewiseCycleCensus(ng,r,c,count,cccount,*pmaxlen,*pdirected,\n        *pbyvertex,*pcocycles);\n      /*for(k=0;k<*pmaxlen-1;k++)\n      Rprintf(\"%d:%d \",k+2,(int)(count[k]));\n      Rprintf(\"\\n\");*/\n      /*Next, add the (r,c) edge to the graph*/\n      /*Rprintf(\"\\tGot cycles, now adding edge to ng\\n\");*/\n      dval=(double *)R_alloc(1,sizeof(double));   /*Create iel element*/\n      dval[0]=(double)g[i+2*m];\n      ng->iel[c]=slistInsert(ng->iel[c],(double)r,(void *)dval);\n      ng->indeg[c]++;\n      dval=(double *)R_alloc(1,sizeof(double));   /*Create oel element*/\n      dval[0]=(double)g[i+2*m];\n      ng->oel[r]=slistInsert(ng->oel[r],(double)c,(void *)dval);\n      ng->outdeg[r]++;\n      if(!(*pdirected)){\n        dval=(double *)R_alloc(1,sizeof(double));   /*Create iel element*/\n        dval[0]=(double)g[i+2*m];\n        ng->iel[r]=slistInsert(ng->iel[r],(double)c,(void *)dval);\n        ng->indeg[r]++;\n        dval=(double *)R_alloc(1,sizeof(double));   /*Create oel element*/\n        dval[0]=(double)g[i+2*m];\n        ng->oel[c]=slistInsert(ng->oel[c],(double)r,(void *)dval);\n        ng->outdeg[c]++;\n      }\n    }\n\n  PutRNGstate();\n}\n",
+    "created" : 1487688353071.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1363452443",
+    "id" : "18E71585",
+    "lastKnownWriteTime" : 1487687898,
+    "last_content_update" : 1487687898,
+    "path" : "~/GitHub/graph-statistics/cycleanalysis/PathNew.c",
+    "project_path" : "PathNew.c",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "c"
+}
