@@ -13,7 +13,7 @@
 #
 ######################################################################
 */
- 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <R.h>
@@ -31,11 +31,11 @@ void edgewisePathRecurse(snaNet *g, int src, int dest, int curnode, int *availno
   /*Rprintf("\t\t\tRecursion: src=%d, dest=%d, curnode=%d, curlen=%d, availcount=%d\n",src,dest, curnode,curlen,availcount);*/
 
   n=g->n;
-  /*Rprintf("N=%d\n",n);*/
-  /*If we've found a path to the destination, increment the census vector*/ 
+ // Rprintf("N=%d\n",n); N = Length
+  /*If we've found a path to the destination, increment the census vector*/
   if(directed||(curnode<dest)){
     if(snaIsAdjacent(curnode,dest,g,2)){
-      /*Rprintf("\t\t\t\t%d is adjacent to target (%d)\n",curnode,dest);*/
+      Rprintf("\t\t\t\t%d is adjacent to target (%d)\n",curnode+1,dest+1);
       count[curlen]++;                       /*Basic update*/
       if(byvertex){                          /*Update path incidence counts*/
         for(j=0;j<curlen;j++)
@@ -143,7 +143,7 @@ void edgewisePathRecurse(snaNet *g, int src, int dest, int curnode, int *availno
       }
     }
   }
-  
+
   /*If possible, keep searching for novel paths*/
   if((availcount>0)&&(curlen<maxlen-2)){
     if(availcount>1){    /*Remove the current node from the available list*/
@@ -237,7 +237,7 @@ void edgewiseCycleCensus(snaNet *g, int src, int dest, double *count, double *cc
   }
   if(n==2)
     return;                 /*Failsafe for graphs of order 2*/
-  
+
   /*Perform the recursive path count*/
   if((availnodes=(int *)malloc(sizeof(int)*(n-2)))==NULL){
     Rprintf("Unable to allocate %d bytes for available node list in edgewiseCycleCensus.  Exiting.\n",sizeof(int)*(n-2));
@@ -316,7 +316,7 @@ void dyadPathCensus(snaNet *g, int src, int dest, double *count, double *cpcount
         dpcount[dest*maxlen+src*maxlen*n]++;
     }
   }
-  
+
   /*Perform the recursive path count*/
   if((availnodes=(int *)malloc(sizeof(int)*(n-2)))==NULL){
     Rprintf("Unable to allocate %d bytes for available node list in dyadPathCensus.  Exiting.\n",sizeof(int)*(n-2));
@@ -334,7 +334,7 @@ void dyadPathCensus(snaNet *g, int src, int dest, double *count, double *cpcount
     usednodes[0]=src;
   }
   for(i=0;i<n-2;i++)               /*Recurse on each available vertex*/
-    if(directed||(dest<availnodes[i])){  
+    if(directed||(dest<availnodes[i])){
       if(snaIsAdjacent(src,availnodes[i],g,2))
         edgewisePathRecurse(g,src,dest,availnodes[i],availnodes,n-2,usednodes,1,
           count,cpcount,dpcount,maxlen+1,directed,byvertex,copaths,dyadpaths);
@@ -386,7 +386,7 @@ void cycleCensus_R(int *g, int *pn, int *pm, double *count, double *cccount, int
       c=g[i+m]-1;
       /*First, accumulate the cycles to be formed by the (r,c) edge*/
       /*Rprintf("\tEdge at (%d,%d); counting cycles\n",r+1,c+1);*/
-      edgewiseCycleCensus(ng,r,c,count,cccount,*pmaxlen,*pdirected, 
+      edgewiseCycleCensus(ng,r,c,count,cccount,*pmaxlen,*pdirected,
         *pbyvertex,*pcocycles);
       /*for(k=0;k<*pmaxlen-1;k++)
       Rprintf("%d:%d ",k+2,(int)(count[k]));
@@ -412,7 +412,7 @@ void cycleCensus_R(int *g, int *pn, int *pm, double *count, double *cccount, int
         ng->outdeg[c]++;
       }
     }
-    
+
   PutRNGstate();
 }
 
@@ -432,10 +432,10 @@ void pathCensus_R(double *g, int *pn, int *pm, double *count, double *cpcount, d
   for(i=0;i<n;i++)
     for(j=(!(*pdirected))*(i+1);j<n;j++)
       if(i!=j){
-        dyadPathCensus(ng,i,j,count,cpcount,dpcount,*pmaxlen,*pdirected, 
+        dyadPathCensus(ng,i,j,count,cpcount,dpcount,*pmaxlen,*pdirected,
           *pbyvertex,*pcopaths,*pdyadpaths);
       }
-      
+
   PutRNGstate();
 }
 

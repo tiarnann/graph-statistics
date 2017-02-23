@@ -15,7 +15,7 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
   usednodes=NULL;
 
   /*First, check for a 2-cycle (but only if directed)*/
-  /*Rprintf("\t\tChecking for (%d,%d) edge\n",dest,src);*/
+  Rprintf("\t\tChecking for (%d,%d) edge\n",src+1,dest+1);
   if(directed&&snaIsAdjacent(dest,src,g,2)){
     count[0]++;
     if(byvertex){
@@ -114,7 +114,7 @@ void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, i
       // *********** NB **************
       // Node ID: g[i] Node ID: g[i+m]
       // *********** NB **************
-      Rprintf("ID:%d ID:%d\n",g[i],g[i+m]);
+      Rprintf("ID:%d ID:%d\n",r+1,c+1);
       // *********** NB **************
       // Node ID: g[i] Node ID: g[i+m]
       // *********** NB **************
