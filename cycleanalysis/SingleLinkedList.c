@@ -31,8 +31,8 @@ struct idList *createIDList() {
 void appendID (char *id, struct idList *list){
 	//set up new node
 	struct idNode *newNode = malloc(sizeof(struct idNode));
-	newNode -> createIDNode(id);
-	
+	newNode = createIDNode(id);
+
 	//append node to list
     if (list -> head == NULL){
 		list -> head = newNode;
@@ -42,6 +42,7 @@ void appendID (char *id, struct idList *list){
 		list -> tail -> next = newNode;
 		list -> tail = newNode;
 	}
+	list -> size++;
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -54,28 +55,36 @@ struct listNode{
 
 struct listOfListNodes{
 	long totalSize;
-    struct idList *head;
-    struct idList *tail;
+    struct listNode *head;
+    struct listNode *tail;
 };
 
 //Constructors
 
+struct listNode *createListNode(){
+    struct listNode *result = malloc(sizeof(struct listNode));
+    result -> idList = createIDList();
+    return result;
+};
+
+struct listOfListNodes *createListOfListNodes(){
+    struct listOfListNodes *result = malloc(sizeof(struct listOfListNodes));
+	result -> totalSize = 0;
+    return result;
+};
 
 // Functions
 void appendList (struct listOfListNodes *listOfLists){
-	//set up new node
-	struct idNode *newNode = malloc(sizeof(struct idNode));
-	newNode -> createIDNode(id);
-	
+	//set up new listNode
+	struct listNode *newNode = createListNode();
 	//append node to list
-    if (list -> head == NULL){
-		list -> head = newNode;
-		list -> tail = newNode;
+    if (listOfLists -> head == NULL){
+		listOfLists -> head = newNode;
+		listOfLists -> tail = newNode;
     }
 	else {
-		list -> tail -> next = newNode;
-		list -> tail = newNode;
+		listOfLists -> tail -> next = newNode;
+		listOfLists -> tail = newNode;
 	}
+	listOfLists -> totalSize++;
 }
-
-
