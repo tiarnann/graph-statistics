@@ -1,8 +1,7 @@
-
 #kcycle.list 	- Compute the cycle census of a graph, possibly along with
 #additional information on the inidence of cycles.
 #				- Output list of each node in every cycle
-kcycle.census<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,cycle.comembership=c("none","sum","bylength")){
+kcycle.censusExtension<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,cycle.comembership=c("none","sum","bylength")){
   #Pre-process the raw input
   dat<-as.edgelist.sna(dat)
   if(is.list(dat))
@@ -38,8 +37,9 @@ kcycle.census<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,cycl
   if(is.null(maxlen))
     maxlen<-n
 
+
   #Calculate the cycle information
-  ccen<-.C("cycleCensus_R",as.integer(dat), as.integer(n), as.integer(NROW(dat)), count=as.double(count), cccount=as.double(cccount), as.integer(maxlen), as.integer(directed), as.integer(tabulate.by.vertex), as.integer(cocycles),PACKAGE="cycleanalysis")
+  ccen<-.C("cycleCensusID_R",as.integer(dat), as.integer(n), as.integer(NROW(dat)), count=as.double(count), cccount=as.double(cccount), as.integer(maxlen), as.integer(directed), as.integer(tabulate.by.vertex), as.integer(cocycles),PACKAGE="cycleanalysis")
 
   #Coerce the cycle counts into the right form
   if(!tabulate.by.vertex){

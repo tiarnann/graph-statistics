@@ -6,12 +6,10 @@
 #include "pathsExtension.h"
 
 
-
-
-void cycleCensusID_R(int *id[],int *g, int *pn, int *pm, double *count, double *cccount, int *pmaxlen, int *pdirected, int *pbyvertex, int *pcocycles)
+void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, int *pmaxlen, int *pdirected, int *pbyvertex, int *pcocycles)
 /*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether cycle co-membership counts should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurse.*/
 {
-  int i,r,c,n,m;
+  int i,r,c,n,m,id;
   double *dval;
   snaNet *ng;
 
@@ -26,7 +24,7 @@ void cycleCensusID_R(int *id[],int *g, int *pn, int *pm, double *count, double *
   ng->outdeg=(int *)R_alloc(n,sizeof(int));
   ng->iel=(slelement **)R_alloc(n,sizeof(slelement *));
   ng->oel=(slelement **)R_alloc(n,sizeof(slelement *));
-
+  id=0;
   /*Initialize the graph*/
   for(i=0;i<n;i++){
     ng->indeg[i]=0;
@@ -36,20 +34,24 @@ void cycleCensusID_R(int *id[],int *g, int *pn, int *pm, double *count, double *
   }
 
   /*Walk the graph, adding edges and accumulating cycles*/
-  /*Rprintf("Building graph/accumulating cycles\n\tn=%d,%d\n",n,ng->n);*/
-  for(i=0;i<m;i++)
+  Rprintf("Building graph/accumulating cycles\n\tn=%d,%d\n",n,ng->n);
+  for(i=0;i<m;i++){
+
     if((!IISNA(g[i+2*m]))&&((*pdirected)||(g[i]<g[i+m]))){
       r=g[i]-1;
       c=g[i+m]-1;
+      // Node ID: g[i] Node ID: g[i+m]
+      Rprintf("ID:%d ID:%d\n",g[i],g[i+m]);
       /*First, accumulate the cycles to be formed by the (r,c) edge*/
-      /*Rprintf("\tEdge at (%d,%d); counting cycles\n",r+1,c+1);*/
+      Rprintf("\tEdge at (%d,%d); counting cycles\n",r+1,c+1);
       edgewiseCycleCensus(ng,r,c,count,cccount,*pmaxlen,*pdirected,
         *pbyvertex,*pcocycles);
-      /*for(k=0;k<*pmaxlen-1;k++)
-      Rprintf("%d:%d ",k+2,(int)(count[k]));
-      Rprintf("\n");*/
+      //for(int k=0;k<*pmaxlen-1;k++){
+      //  Rprintf("%d:%d ",k+2,(int)(count[k]));
+      //  Rprintf("\n");
+      //  }
       /*Next, add the (r,c) edge to the graph*/
-      /*Rprintf("\tGot cycles, now adding edge to ng\n");*/
+      Rprintf("\tGot cycles, now adding edge to ng:%d\n",ng[i].n);
       dval=(double *)R_alloc(1,sizeof(double));   /*Create iel element*/
       dval[0]=(double)g[i+2*m];
       ng->iel[c]=slistInsert(ng->iel[c],(double)r,(void *)dval);
@@ -69,6 +71,7 @@ void cycleCensusID_R(int *id[],int *g, int *pn, int *pm, double *count, double *
         ng->outdeg[c]++;
       }
     }
+  }
 
   PutRNGstate();
 }
