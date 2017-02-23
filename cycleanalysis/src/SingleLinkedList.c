@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 //ID LISTS & NODES
 // Structures
@@ -121,7 +121,7 @@ void printListOfListNodes(struct listOfListNodes *listOfLists) {
 	}
 }
 
-int main (){
+int main(int argc, char *argv[]){
     struct idList * list1 = createIDList();
 
     appendID("S1", list1);
@@ -132,6 +132,8 @@ int main (){
 
     appendID("S3", list1);
     printIDList(list1);
+
+    return (0);
 }
 
 
