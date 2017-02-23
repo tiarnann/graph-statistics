@@ -45,6 +45,23 @@ void appendID (char *id, struct idList *list){
 	list -> size++;
 }
 
+void printIDList(struct idList *list) {
+	if (lists->head == Null) {
+		printf("NULL");
+	}
+	
+	//iterate through list, printing the id of each idNode
+	else {
+		struct idNode *current = lists->head;
+		do {
+			printf("%s ", current->id);
+			current = current->next;
+		} while (current->next != NULL);
+		printf("%s ");
+	}
+}
+
+
 //-----------------------------------------------------------------------------------------------
 //LISTNODES & LISTS OF LISTNODES
 //Structures
@@ -88,3 +105,20 @@ void appendList (struct listOfListNodes *listOfLists){
 	}
 	listOfLists -> totalSize++;
 }
+
+void printListOfListNodes(struct listOfListNodes *listOfLists) {
+	if (listOfLists->head == Null) {
+		printf("NULL");
+	}
+	
+	//iterate through listOfLists, printing the content of each listNode
+	else { 
+		struct listNode *current = listOfLists->head;
+		do {
+			printIDList(current->idList);
+			current = current->next;
+		} while (current->next != NULL);
+	}
+}
+
+
