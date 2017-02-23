@@ -43,6 +43,7 @@ typedef struct elementtype{
 
 
 /*Element datatypes for skip lists.  These are fairly similar to "elements," except that they add an extra "depth" parameter to keep track of the length of the pointer vector contained in next (as opposed to the single pointer for a standard element).  The list itself will ultimately look something like this:
+
  head -> el1 -> el2 -> el3 -> el4 -> el5 -> el6 -> el7
   |       |             |      |      |             |
  ph1 --> p11 --------> p31 -> p41 -> p51 --------> p71
@@ -50,7 +51,9 @@ typedef struct elementtype{
  ph2 --> p12 --------> p32 --------> p52
   |                     |             |
  ph3 ----------------> p33 --------> p53
+
 Note that the initial pointer to the next element is intended to be the first element of next, and is carried by all list members.  Additional pointers may also be carried, this being (of course) random.  In practice, skip lists always require a head pointer with depth equal to the maximum list depth; it may be helpful to maintain the list length in its val entry (and this is done here).
+
 Important implementation note: as used here, depth=length(next vector)-1 (i.e., the mandatory first element is not included).  This allows el->next[depth] to be the outermost pointer, with depth==0 denoting the minimal case.  (Otherwise, we'd have an extra subtraction operation carried through all of our lookup routines, for no particularly good reason.)  Just bear in mind that the length of the next vector is depth+1, in case this is important for some application or other.
 */
 
@@ -73,8 +76,8 @@ typedef struct snaNettype{
 } snaNet;
 
 
-/*The dtelement datatype; contains a double value, a vector of "upper" and
-"lower" bound values, an abstract data pointer, a dimensional value, and a
+/*The dtelement datatype; contains a double value, a vector of "upper" and 
+"lower" bound values, an abstract data pointer, a dimensional value, and a 
 pointer to a vector of child elements.  The purpose of the element is to serve
 in dimensional trees, which are needed for some of the graph layout algorithms.
 In general usage, each element will cover a rectangular spatial cell with

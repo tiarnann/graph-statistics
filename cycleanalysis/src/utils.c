@@ -29,7 +29,7 @@ simple weighted aggregation of a 3-dimensional array.  This operation can
 be surprisingly slow in R for large matrices, and hence is backended here.*/
 {
   int i,j,k;
-
+  
   for(i=0;i<*n;i++)
     for(j=0;j<*n;j++){
       mat[i+j*(*n)]=0.0;
@@ -48,10 +48,10 @@ same dyad.  This can be done within R, but C is a lot faster.  Presumably.*/
 {
   int i;
   double nd=(double)(*n);
-
+  
   for(i=0;i<*m;i++){
     dc[i]=((mat[i]<mat[i+(*m)]) ? (mat[i]+mat[i+(*m)]*nd) : (mat[i+(*m)]+mat[i]*nd));
-  }
+  }  
 }
 
 
@@ -59,7 +59,7 @@ void logadd_R(double *lvals, int *n, double *lsum)
 /*Utility function to perform logspace addition on a vector of numbers and return the (log) sum.  (Why doesn't R have a userspace routine for this?)*/
 {
   int i;
-
+  
   if(*n==1){
     *lsum=lvals[0];
     return;
@@ -74,7 +74,7 @@ void logsub_R(double *lx, double *ly, int *n, double *ldiff)
 /*Utility function to perform (elementwise) logspace subtraction on a pair of vectors and return the resulting values.  (Why doesn't R have a userspace routine for this?)*/
 {
   int i;
-
+  
   for(i=0;i<*n;i++)
     ldiff[i]=logspace_sub(lx[i],ly[i]);
 }
@@ -129,7 +129,7 @@ non-zero element values are stored within the snaNet object, in double form.*/
 snaNet *elMatTosnaNet(double *mat, int *n, int *m)
 /*Given an edgelist matrix, create a snaNet object.  This matrix must be in
 three-column form, as sender/receiver/value; undirected graphs should be passed
-as fully mutual digraphs.  The specified edge values are stored within the
+as fully mutual digraphs.  The specified edge values are stored within the 
 snaNet object, in double form.*/
 {
   snaNet *g;
@@ -196,7 +196,7 @@ int snaIsAdjacent(int i, int j, snaNet *g, int checkna)
 /*Determine whether i sends an edge to j.  If checkna==0, missingness is ignored when checking (i.e., we just see if an edge is in the database).  If checkna==1, then missingness is checked and an NA_INTEGER is returned if the edge has a missing value.  If checkna==2, then missingness is also checked, but the edge is reported as absent if it has a missing value.*/
 {
   slelement *sep;
-
+  
   if(g->indeg[j]>g->outdeg[i]){           /*Check shortest available list*/
     switch(checkna){
       case 0:                                  /*Don't check*/
@@ -258,8 +258,8 @@ int isInSList(slelement *head, double val)
 {
   slelement *ep;
   int i;
-
-  /*Return immediately if no list*/
+  
+  /*Return immediately if no list*/  
   if(head==NULL)
     return 0;
   /*Otherwise, go looking for trouble*/
@@ -269,7 +269,7 @@ int isInSList(slelement *head, double val)
   /*We have reached the end of the line; check to see where we are*/
   if((ep->next[0]==NULL)||(ep->next[0]->val>val))
     return 0;
-  return 1;
+  return 1;    
 }
 
 
@@ -281,7 +281,7 @@ slelement *slistDelete(slelement *head, double val)
 
 //  Rprintf("\tTrying to delete item with val %.1f\n",val);
 
-  /*Return immediately if no list*/
+  /*Return immediately if no list*/  
   if(head==NULL)
     return NULL;
 
@@ -317,7 +317,7 @@ slelement *slistDelete(slelement *head, double val)
     for(i=0;i<=head->depth;i++)
       head->next[i]=epp[i];
   }
-
+  
   /*Return the item pointer*/
 //  Rprintf("\t\tAbout to return item %.1f\n",rp->val);
   return rp;
@@ -329,14 +329,14 @@ slelement *slistInsert(slelement *head, double val, void *dp)
 {
   slelement *ep,*new,**tochange,**epp;
   int i;
-
+  
   /*Create the new element*/
   new=(slelement *)R_alloc(1,sizeof(slelement));
   new->depth=(int)rgeom(0.5);
   new->next=(slelement **)R_alloc(new->depth+1,sizeof(slelement *));
   new->val=val;
   new->dp=dp;
-
+  
   /*Add it to the list*/
   if(head==NULL){  /*If no list, create from whole cloth....*/
     head=(slelement *)R_alloc(1,sizeof(slelement));
@@ -372,7 +372,7 @@ slelement *slistInsert(slelement *head, double val, void *dp)
       tochange[i]->next[i]=new;
     }
   }
-
+  
   /*Return the possibly updated head pointer*/
   return head;
 }
@@ -383,7 +383,7 @@ void slistPrint(slelement *head)
 {
   slelement *ep,*ep2;
   int count=0,i,j;
-
+  
   Rprintf("SkipList Printout:\n");
   if(head==NULL)
     Rprintf("\tEmpty list.\n");
@@ -408,7 +408,7 @@ slelement *slistSearch(slelement *head, double val)
   slelement *ep;
   int i;
 
-  /*Return immediately if no list*/
+  /*Return immediately if no list*/  
   if(head==NULL)
     return NULL;
   /*Otherwise, go looking for trouble*/
@@ -418,7 +418,7 @@ slelement *slistSearch(slelement *head, double val)
   /*We have reached the end of the line; check to see where we are*/
   if((ep->next[0]==NULL)||(ep->next[0]->val>val))
     return NULL;
-  return ep->next[0];
+  return ep->next[0];    
 }
 
 
@@ -428,7 +428,7 @@ int isInList(element *head, double val)
 /*Is val in the sorted list pointed to by head?*/
 {
   element *ep;
-
+  
   for(ep=head;(ep!=NULL)&&(ep->val<val);ep=ep->next);
   if(ep==NULL)
     return 0;
@@ -500,7 +500,7 @@ return rval;
 
 
 element *push(element *head, double val, void *dp)
-/*Adds element with value val to the stack, returning the head
+/*Adds element with value val to the stack, returning the head 
 pointer.*/
 {
 element *newnode;
@@ -575,7 +575,7 @@ if(head==NULL){
       p->next=rval.next;
    }
 }
-
+      
 return rval;
 }
 
@@ -594,7 +594,7 @@ if(head==NULL){
 }else{
    if(head->next==NULL){
       rval.val=head->val;
-      rval.dp=head->dp;
+      rval.dp=head->dp; 
       head=NULL;
       rval.next=NULL;
    }else{
@@ -605,13 +605,13 @@ if(head==NULL){
       p->next=NULL;
    }
 }
-
+      
 return rval;
 }
 
 
 element *enqueue(element *head, double val, void *dp)
-/*Adds element with value val to the queue, returning the head
+/*Adds element with value val to the queue, returning the head 
 pointer.*/
 {
 element *newnode;
@@ -631,11 +631,11 @@ head=newnode;
 return head;
 }
 
-
+ 
 long int queuelen(element *head)
 /*Returns the length of the queue pointed to by head*/
 {
-element *p;
+element *p; 
 int count=0;
 
 for(p=head;p!=NULL;p=p->next)
@@ -686,6 +686,7 @@ if(head==NULL){
       p->next=rval.next;
    }
 }
-
+      
 return rval;
 }
+
