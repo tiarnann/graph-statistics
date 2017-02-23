@@ -14,8 +14,8 @@
 #
 ######################################################################
 */
-#ifndef PATHS_H
-#define PATHS_H
+#ifndef PATHS_EXTENSION_H
+#define PATHS_EXTENSION_H
 
 /*DECLARATIONS/INCLUSIONS---------------------------------------------------*/
 

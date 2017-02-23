@@ -50,7 +50,7 @@ bicomponent.dist<-function(dat,symmetrize=c("strong","weak")){
    #Symmetrize dat based on the connectedness rule
    dat<-symmetrize(dat,rule=match.arg(symmetrize),return.as.edgelist=TRUE)
    #Compute the bicomponents
-   bc<-.Call("bicomponents_R",dat,n,NROW(dat),PACKAGE="sna")
+   bc<-.Call("bicomponents_R",dat,n,NROW(dat),PACKAGE="cycleanalysis")
    if(length(bc[[1]])>1){                             #Sort by size
      ord<-order(sapply(bc[[1]],length),decreasing=TRUE)
      bc[[1]]<-bc[[1]][ord]
@@ -106,7 +106,7 @@ clique.census<-function(dat,mode="digraph",tabulate.by.vertex=TRUE,clique.comemb
     sum=1,
     bysize=2
   )
-  census<-.Call("cliques_R",dat,n,NROW(dat),tabulate.by.vertex, clique.comembership,enumerate,PACKAGE="sna")
+  census<-.Call("cliques_R",dat,n,NROW(dat),tabulate.by.vertex, clique.comembership,enumerate,PACKAGE="cycleanalysis")
   #Assemble the results
   maxsize<-census[[1]]
   census<-census[-1]
@@ -160,7 +160,7 @@ component.dist<-function(dat,connected=c("strong","weak","unilateral","recursive
        "recursive"=symmetrize(dat,rule="strong",return.as.edgelist=TRUE)
      )
      #Find the component information using the leanest available method
-     memb<-.C("undirComponents_R",as.double(dat),as.integer(n),as.integer(NROW(dat)), memb=integer(n+1),PACKAGE="sna",NAOK=TRUE)$memb
+     memb<-.C("undirComponents_R",as.double(dat),as.integer(n),as.integer(NROW(dat)), memb=integer(n+1),PACKAGE="cycleanalysis",NAOK=TRUE)$memb
      csize<-tabulate(memb[-1],memb[1])
      cdist<-rep(0,n)
      cdist[1:max(csize)]<-tabulate(csize,max(csize))
@@ -172,7 +172,7 @@ component.dist<-function(dat,connected=c("strong","weak","unilateral","recursive
      if(any(dat!=t(dat)))
        warning("Nonunique unilateral component partition detected in component.dist.  Problem vertices will be arbitrarily assigned to one of their components.\n")
      #Find the membership information using a not-too-shabby method
-     memb<-.C("component_dist_R",as.double(dat),as.double(n), memb=as.double(rep(0,n)),PACKAGE="sna",NAOK=TRUE)$memb
+     memb<-.C("component_dist_R",as.double(dat),as.double(n), memb=as.double(rep(0,n)),PACKAGE="cycleanalysis",NAOK=TRUE)$memb
      csize<-tabulate(memb,max(memb))
      cdist<-rep(0,n)
      cdist[1:max(csize)]<-tabulate(csize,max(csize))
@@ -240,7 +240,7 @@ component.size.byvertex<-function(dat, connected=c("strong","weak","unilateral",
     else
       rule<-"strong"
     g<-symmetrize(g,rule=rule, return.as.edgelist=TRUE) #Must symmetrize!
-    cs<-.C("compsizes_R",as.double(g),as.integer(attr(g,"n")),as.integer(NROW(g)), csizes=integer(attr(g,"n")),PACKAGE="sna",NAOK=TRUE)$csizes
+    cs<-.C("compsizes_R",as.double(g),as.integer(attr(g,"n")),as.integer(NROW(g)), csizes=integer(attr(g,"n")),PACKAGE="cycleanalysis",NAOK=TRUE)$csizes
   }else{                                            #No shortcut.  Sad!
     cd<-component.dist(dat,connected=match.arg(connected))
     cs<-cd$csize[cd$membership]
@@ -280,7 +280,7 @@ cutpoints<-function(dat,mode="digraph",connected=c("strong","weak","recursive"),
    attr(dat,"n")<-n
    cp<-rep(0,n)
    if(mode=="graph")
-     cp<-.C("cutpointsUndir_R",as.double(dat),as.integer(n), as.integer(NROW(dat)),cp=as.integer(cp),NAOK=TRUE,PACKAGE="sna")$cp
+     cp<-.C("cutpointsUndir_R",as.double(dat),as.integer(n), as.integer(NROW(dat)),cp=as.integer(cp),NAOK=TRUE,PACKAGE="cycleanalysis")$cp
    else{
      dat<-switch(match.arg(connected),
        strong=dat,
@@ -288,9 +288,9 @@ cutpoints<-function(dat,mode="digraph",connected=c("strong","weak","recursive"),
        recursive=symmetrize(dat,rule="strong",return.as.edgelist=TRUE)
      )
      if(match.arg(connected)=="strong")
-       cp<-.C("cutpointsDir_R",as.double(dat),as.integer(n), as.integer(NROW(dat)),cp=as.integer(cp),NAOK=TRUE,PACKAGE="sna")$cp
+       cp<-.C("cutpointsDir_R",as.double(dat),as.integer(n), as.integer(NROW(dat)),cp=as.integer(cp),NAOK=TRUE,PACKAGE="cycleanalysis")$cp
      else
-       cp<-.C("cutpointsUndir_R",as.double(dat),as.integer(n), as.integer(NROW(dat)),cp=as.integer(cp),NAOK=TRUE,PACKAGE="sna")$cp
+       cp<-.C("cutpointsUndir_R",as.double(dat),as.integer(n), as.integer(NROW(dat)),cp=as.integer(cp),NAOK=TRUE,PACKAGE="cycleanalysis")$cp
    }
    if(!return.indicator)
      return(which(cp>0))
@@ -325,11 +325,11 @@ geodist<-function(dat,inf.replace=Inf,count.paths=TRUE,predecessors=FALSE,ignore
    #Initialize the matrices
    #Perform the calculation
    if(ignore.eval)
-     geo<-.Call("geodist_R",dat,n,m,as.integer(1),count.paths,predecessors, NAOK=TRUE, PACKAGE="sna")
+     geo<-.Call("geodist_R",dat,n,m,as.integer(1),count.paths,predecessors, NAOK=TRUE, PACKAGE="cycleanalysis")
    else{
      if(any(dat[!is.na(dat[,3]),3]<0))
        stop("Negative edge values not currently supported in geodist; transform or otherwise alter them to ensure that they are nonnegative.")
-     geo<-.Call("geodist_val_R",dat,n,m,as.integer(1),count.paths,predecessors, NAOK=TRUE, PACKAGE="sna")
+     geo<-.Call("geodist_val_R",dat,n,m,as.integer(1),count.paths,predecessors, NAOK=TRUE, PACKAGE="cycleanalysis")
    }
    #Return the results
    o<-list()
@@ -404,7 +404,7 @@ kcores<-function(dat,mode="digraph",diag=FALSE,cmode="freeman",ignore.eval=FALSE
   )
   if(!(cmode%in%c("indegree","outdegree","freeman")))
     stop("Illegal cmode in kcores.\n")
-  solve<-.C("kcores_R",as.double(dat),as.integer(n),as.integer(m), cv=as.double(corevec), as.integer(dtype), as.integer(diag), as.integer(ignore.eval), NAOK=TRUE,PACKAGE="sna")
+  solve<-.C("kcores_R",as.double(dat),as.integer(n),as.integer(m), cv=as.double(corevec), as.integer(dtype), as.integer(diag), as.integer(ignore.eval), NAOK=TRUE,PACKAGE="cycleanalysis")
   if(is.null(attr(dat,"vnames")))
     names(solve$cv)<-1:n
   else
@@ -453,7 +453,7 @@ kcycle.census<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,cycl
   if(is.null(maxlen))
     maxlen<-n
   #Calculate the cycle information
-  ccen<-.C("cycleCensus_R",as.integer(dat), as.integer(n), as.integer(NROW(dat)), count=as.double(count), cccount=as.double(cccount), as.integer(maxlen), as.integer(directed), as.integer(tabulate.by.vertex), as.integer(cocycles),PACKAGE="sna")
+  ccen<-.C("cycleCensus_R",as.integer(dat), as.integer(n), as.integer(NROW(dat)), count=as.double(count), cccount=as.double(cccount), as.integer(maxlen), as.integer(directed), as.integer(tabulate.by.vertex), as.integer(cocycles),PACKAGE="cycleanalysis")
   #Coerce the cycle counts into the right form
   if(!tabulate.by.vertex){
     count<-ccen$count
@@ -528,7 +528,7 @@ kpath.census<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,path.
   else
     dpcount<-array(0,dim=c(maxlen,n,n))
   #Calculate the path information
-  pcen<-.C("pathCensus_R",as.double(dat), as.integer(n), as.integer(NROW(dat)), count=as.double(count), cpcount=as.double(cpcount), dpcount=as.double(dpcount), as.integer(maxlen), as.integer(directed), as.integer(tabulate.by.vertex), as.integer(copaths), as.integer(dyadpaths),PACKAGE="sna")
+  pcen<-.C("pathCensus_R",as.double(dat), as.integer(n), as.integer(NROW(dat)), count=as.double(count), cpcount=as.double(cpcount), dpcount=as.double(dpcount), as.integer(maxlen), as.integer(directed), as.integer(tabulate.by.vertex), as.integer(copaths), as.integer(dyadpaths),PACKAGE="cycleanalysis")
   #Coerce the path counts into the right form
   if(!tabulate.by.vertex){
     count<-pcen$count
@@ -588,7 +588,7 @@ maxflow<-function(dat,src=NULL,sink=NULL,ignore.eval=FALSE){
   fmat<-matrix(nrow=length(src),ncol=length(sink))
   for(i in 1:length(src))
     for(j in 1:length(sink))
-      fmat[i,j]<-.C("maxflow_EK_R",as.double(dat),as.integer(NROW(dat)), as.integer(src[i]-1),as.integer(sink[j]-1),flow=as.double(0),NAOK=TRUE,PACKAGE="sna")$flo
+      fmat[i,j]<-.C("maxflow_EK_R",as.double(dat),as.integer(NROW(dat)), as.integer(src[i]-1),as.integer(sink[j]-1),flow=as.double(0),NAOK=TRUE,PACKAGE="cycleanalysis")$flo
   #Return the result
   if(length(src)*length(sink)>1){
     if(is.null(rownames(dat)))
@@ -676,7 +676,7 @@ reachability<-function(dat,geodist.precomp=NULL,return.as.edgelist=FALSE,na.omit
        sel<-rep(TRUE,NROW(dat))
      dat<-dat[(dat[,1]!=dat[,2])&sel,,drop=FALSE]
      m<-NROW(dat)
-     rg<-.Call("reachability_R",dat,n,m,PACKAGE="sna")
+     rg<-.Call("reachability_R",dat,n,m,PACKAGE="cycleanalysis")
      if(return.as.edgelist)
        rg
      else

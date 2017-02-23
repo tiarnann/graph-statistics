@@ -102,7 +102,7 @@ logMean<-function(x){
   if(length(x)==0)
     numeric(0)
   else
-    .C("logadd_R",as.double(x),as.integer(length(x)),lsum=as.double(0), NAOK=TRUE,PACKAGE="sna")$lsum-log(length(x))
+    .C("logadd_R",as.double(x),as.integer(length(x)),lsum=as.double(0), NAOK=TRUE,PACKAGE="cycleanalysis")$lsum-log(length(x))
 }
 
 
@@ -113,7 +113,7 @@ logSub<-function(x,y){
   else if(length(x)==0)
     numeric(0)
   else
-    .C("logsub_R",as.double(x),as.double(y),as.integer(length(x)), ldiff=as.double(rep(0,length(x))),NAOK=TRUE,PACKAGE="sna")$ldiff
+    .C("logsub_R",as.double(x),as.double(y),as.integer(length(x)), ldiff=as.double(rep(0,length(x))),NAOK=TRUE,PACKAGE="cycleanalysis")$ldiff
 }
 
 
@@ -122,5 +122,5 @@ logSum<-function(x){
   if(length(x)==0)
     numeric(0)
   else
-    .C("logadd_R",as.double(x),as.integer(length(x)),lsum=as.double(0), NAOK=TRUE,PACKAGE="sna")$lsum
+    .C("logadd_R",as.double(x),as.integer(length(x)),lsum=as.double(0), NAOK=TRUE,PACKAGE="cycleanalysis")$lsum
 }

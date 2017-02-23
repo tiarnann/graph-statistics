@@ -1,21 +1,21 @@
 
-#kcycle.list 	- Compute the cycle census of a graph, possibly along with 
+#kcycle.list 	- Compute the cycle census of a graph, possibly along with
 #additional information on the inidence of cycles.
 #				- Output list of each node in every cycle
-kcycle.census.edited<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,cycle.comembership=c("none","sum","bylength")){
-  #Pre-process the raw input 
+kcycle.census<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,cycle.comembership=c("none","sum","bylength")){
+  #Pre-process the raw input
   dat<-as.edgelist.sna(dat)
   if(is.list(dat))
     return(lapply(dat,kcycle.list,maxlen=maxlen,mode=mode, tabulate.by.vertex=tabulate.by.vertex,cycle.comembership=cycle.comembership))
   #End pre-processing
-  
+
   n<-attr(dat,"n")						# n = #nodes
   if(is.null(maxlen))
     maxlen<-n
   if(maxlen<2)
     stop("maxlen must be >=2")
   if(is.null(attr(dat,"vnames")))
-    vnam<-paste("v",1:n,sep="")		
+    vnam<-paste("v",1:n,sep="")
   else
     vnam<-attr(dat,"vnames")
   if(mode=="digraph")
@@ -23,7 +23,7 @@ kcycle.census.edited<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TR
   else
     directed<-FALSE
   cocycles<-switch(match.arg(cycle.comembership), "none"=0, "sum"=1, "bylength"=2)
-  
+
   #Generate the data structures for the counts
   if(!tabulate.by.vertex)
     count<-rep(0,maxlen-1)
@@ -37,10 +37,10 @@ kcycle.census.edited<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TR
     cccount<-array(0,dim=c(maxlen-1,n,n))
   if(is.null(maxlen))
     maxlen<-n
-	
+
   #Calculate the cycle information
-  ccen<-.C("cycleCensus_R",as.integer(dat), as.integer(n), as.integer(NROW(dat)), count=as.double(count), cccount=as.double(cccount), as.integer(maxlen), as.integer(directed), as.integer(tabulate.by.vertex), as.integer(cocycles),PACKAGE="sna")
-  
+  ccen<-.C("cycleCensus_R",as.integer(dat), as.integer(n), as.integer(NROW(dat)), count=as.double(count), cccount=as.double(cccount), as.integer(maxlen), as.integer(directed), as.integer(tabulate.by.vertex), as.integer(cocycles),PACKAGE="cycleanalysis")
+
   #Coerce the cycle counts into the right form
   if(!tabulate.by.vertex){
     count<-ccen$count
@@ -49,7 +49,7 @@ kcycle.census.edited<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TR
     count<-matrix(ccen$count,maxlen-1,n+1)
     rownames(count)<-2:maxlen
     colnames(count)<-c("Agg",vnam)
-  }  
+  }
   if(cocycles==1){
     cccount<-matrix(ccen$cccount,n,n)
     rownames(cccount)<-vnam
@@ -58,8 +58,8 @@ kcycle.census.edited<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TR
     cccount<-array(ccen$cccount,dim=c(maxlen-1,n,n))
     dimnames(cccount)<-list(2:maxlen,vnam,vnam)
   }
-  
-  
+
+
   #Return the result
   out<-list(cycle.count=count)
   out$cycle.ccenCount<-ccen$count

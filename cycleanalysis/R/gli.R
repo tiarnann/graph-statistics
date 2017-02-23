@@ -71,7 +71,7 @@ connectedness<-function(dat,g=NULL){
    if(n<=1)
      con<-1
    else
-     con<-.C("connectedness_R",as.double(g),as.integer(n),as.integer(m), con=as.double(0.0),PACKAGE="sna",NAOK=TRUE)$con
+     con<-.C("connectedness_R",as.double(g),as.integer(n),as.integer(m), con=as.double(0.0),PACKAGE="cycleanalysis",NAOK=TRUE)$con
    #Return the result
    con
 }
@@ -85,7 +85,7 @@ dyad.census<-function(dat,g=NULL){
      n<-attr(m,"n")
      m<-m[m[,1]!=m[,2],,drop=FALSE]          #Kill loops, if any
      if(NROW(m)>0){
-       dc<-.C("dyadcode_R",as.double(m),as.integer(n),as.integer(NROW(m)), dc=as.double(rep(0,NROW(m))),PACKAGE="sna",NAOK=TRUE)$dc
+       dc<-.C("dyadcode_R",as.double(m),as.integer(n),as.integer(NROW(m)), dc=as.double(rep(0,NROW(m))),PACKAGE="cycleanalysis",NAOK=TRUE)$dc
        mis<-is.na(m[,3])            #Count/remove missing dyads
        if(any(mis)){
          mis[dc%in%c(dc[mis])]<-TRUE
@@ -239,7 +239,7 @@ grecip<-function(dat,g=NULL,measure=c("dyadic","dyadic.nonnull","edgewise","edge
         gv<-(sum((z[,3]-gm)^2,na.rm=TRUE)+(ne-NROW(z))*gm^2)/(ne-emiss-1)
         if(gv==0)                                  #If var 0, treat as corr 1
           return(1)
-        dc<-.C("dyadcode_R",as.double(z),as.integer(n),as.integer(NROW(z)), dc=as.double(rep(0,NROW(z))),PACKAGE="sna",NAOK=TRUE)$dc
+        dc<-.C("dyadcode_R",as.double(z),as.integer(n),as.integer(NROW(z)), dc=as.double(rep(0,NROW(z))),PACKAGE="cycleanalysis",NAOK=TRUE)$dc
         odc<-order(dc)
         zv<-z[odc,3]-gm  #Order by dyad ID, subtract graph mean
         dc<-dc[odc]
@@ -420,7 +420,7 @@ gtrans<-function(dat,g=NULL,diag=FALSE,mode="digraph",measure=c("weak","strong",
       "rank"=2,
       "correlation"=3
     )
-    gt<-.C("transitivity_R",as.double(dat),as.integer(attr(dat,"n")), as.integer(NROW(dat)),gt=as.double(c(0,0)),as.integer(meas),as.integer(1),NAOK=TRUE,PACKAGE="sna")$gt
+    gt<-.C("transitivity_R",as.double(dat),as.integer(attr(dat,"n")), as.integer(NROW(dat)),gt=as.double(c(0,0)),as.integer(meas),as.integer(1),NAOK=TRUE,PACKAGE="cycleanalysis")$gt
     if(match.arg(measure)%in%c("weak","strong","rank")){
       if(gt[2]==0)              #By convention, return 1 if no preconditions
         1
@@ -480,7 +480,7 @@ lubness<-function(dat,g=NULL){
          if(length(vi)>2){  #Components must be of size 3
            #Accumulate violations
            viol<-as.double(0)
-           viol<-.C("lubness_con_R",as.double(g[vi,vi]), as.double(length(vi)),as.integer(r[vi,vi]),viol=viol,PACKAGE="sna")$viol
+           viol<-.C("lubness_con_R",as.double(g[vi,vi]), as.double(length(vi)),as.integer(r[vi,vi]),viol=viol,PACKAGE="cycleanalysis")$viol
            nolub<-nolub+viol
            #Also accumulate maximum violations
            maxnolub<-maxnolub+(length(vi)-1)*(length(vi)-2)/2 
@@ -537,7 +537,7 @@ triad.census<-function(dat,g=NULL,mode=c("digraph","graph")){
      m<-as.integer(NROW(dat[[i]]))
      tcv<-as.double(rep(0,length(tc)))
      if(n>2)
-       tcm[i,]<-.C("triad_census_R",as.double(dat[[i]]),n,m,tcv=tcv,gm, as.integer(1),PACKAGE="sna", NAOK=TRUE)$tcv
+       tcm[i,]<-.C("triad_census_R",as.double(dat[[i]]),n,m,tcv=tcv,gm, as.integer(1),PACKAGE="cycleanalysis", NAOK=TRUE)$tcv
    }
    colnames(tcm)<-tc
    rownames(tcm)<-rnam
@@ -567,6 +567,6 @@ triad.classify<-function(dat,g=1,tri=c(1,2,3),mode=c("digraph","graph")){
    #Classify the triad
    tt<-as.integer(0)
    gm<-as.integer(switch(match.arg(mode),graph=0,digraph=1))
-   tt<-.C("triad_classify_R",as.integer(d),tt=tt,gm,PACKAGE="sna")$tt
+   tt<-.C("triad_classify_R",as.integer(d),tt=tt,gm,PACKAGE="cycleanalysis")$tt
    tc[tt+1]
 }

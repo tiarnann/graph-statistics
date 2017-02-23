@@ -686,7 +686,7 @@ gplot.layout.fruchtermanreingold<-function(d,layout.par){
   #Symmetrize the network, just in case
   d<-symmetrize(d,rule="weak",return.as.edgelist=TRUE) 
   #Perform the layout calculation
-  layout<-.C("gplot_layout_fruchtermanreingold_R", as.double(d), as.double(n), as.double(NROW(d)), as.integer(niter), as.double(max.delta), as.double(area), as.double(cool.exp), as.double(repulse.rad), as.integer(ncell), as.double(cell.jitter), as.double(cell.pointpointrad), as.double(cell.pointcellrad), as.double(cell.cellcellrad), x=as.double(x), y=as.double(y), PACKAGE="sna")
+  layout<-.C("gplot_layout_fruchtermanreingold_R", as.double(d), as.double(n), as.double(NROW(d)), as.integer(niter), as.double(max.delta), as.double(area), as.double(cool.exp), as.double(repulse.rad), as.integer(ncell), as.double(cell.jitter), as.double(cell.pointpointrad), as.double(cell.pointcellrad), as.double(cell.cellcellrad), x=as.double(x), y=as.double(y), PACKAGE="cycleanalysis")
   #Return the result
   cbind(layout$x,layout$y)
 }
@@ -764,7 +764,7 @@ gplot.layout.kamadakawai<-function(d,layout.par){
     y<-layout.par$seed.coord[,2]
   }
   #Obtain locations
-  pos<-.C("gplot_layout_kamadakawai_R",as.integer(n),as.integer(niter), as.double(elen),as.double(initemp),as.double(coolexp),as.double(kkconst),as.double(sigma), x=as.double(x),y=as.double(y), PACKAGE="sna")
+  pos<-.C("gplot_layout_kamadakawai_R",as.integer(n),as.integer(niter), as.double(elen),as.double(initemp),as.double(coolexp),as.double(kkconst),as.double(sigma), x=as.double(x),y=as.double(y), PACKAGE="cycleanalysis")
   #Return to x,y coords
   cbind(pos$x,pos$y)
 }
@@ -1071,7 +1071,7 @@ gplot.layout.target<-function(d,layout.par){
   elen[elen<minlen]<-(outer(radii,radii,"+")/sqrt(2))[elen<minlen]
   elen<-geodist(elen*d,inf.replace=n)$gdist
   #Obtain thetas
-  pos<-.C("gplot_layout_target_R",as.integer(d),as.double(n), as.integer(niter),as.double(elen),as.double(radii),as.integer(core), as.double(disconst),as.double(crossconst),as.double(repconst), as.double(minpdis),as.double(initemp),as.double(coolexp),as.double(maxdelta), theta=as.double(theta),PACKAGE="sna")
+  pos<-.C("gplot_layout_target_R",as.integer(d),as.double(n), as.integer(niter),as.double(elen),as.double(radii),as.integer(core), as.double(disconst),as.double(crossconst),as.double(repconst), as.double(minpdis),as.double(initemp),as.double(coolexp),as.double(maxdelta), theta=as.double(theta),PACKAGE="cycleanalysis")
   #Transform to x,y coords
   cbind(radii*cos(pos$theta),radii*sin(pos$theta))
 }
@@ -1498,7 +1498,7 @@ gplot3d.layout.fruchtermanreingold<-function(d,layout.par){
   d<-symmetrize(d,return.as.edgelist=TRUE)
   #Set up positions
   #Perform the layout calculation
-  layout<-.C("gplot3d_layout_fruchtermanreingold_R", as.double(d), as.integer(n), as.integer(NROW(d)), as.integer(niter), as.double(max.delta), as.double(volume), as.double(cool.exp), as.double(repulse.rad), x=as.double(x), y=as.double(y), z=as.double(z),PACKAGE="sna")
+  layout<-.C("gplot3d_layout_fruchtermanreingold_R", as.double(d), as.integer(n), as.integer(NROW(d)), as.integer(niter), as.double(max.delta), as.double(volume), as.double(cool.exp), as.double(repulse.rad), x=as.double(x), y=as.double(y), z=as.double(z),PACKAGE="cycleanalysis")
   #Return the result
   cbind(layout$x,layout$y,layout$z)
 }
@@ -1578,7 +1578,7 @@ gplot3d.layout.kamadakawai<-function(d,layout.par){
     z<-layout.par$seed.coord[,3]
   }
   #Obtain locations
-  pos<-.C("gplot3d_layout_kamadakawai_R",as.double(n), as.integer(niter),as.double(elen),as.double(initemp),as.double(coolexp), as.double(kkconst),as.double(sigma),x=as.double(x),y=as.double(y), z=as.double(z),PACKAGE="sna")
+  pos<-.C("gplot3d_layout_kamadakawai_R",as.double(n), as.integer(niter),as.double(elen),as.double(initemp),as.double(coolexp), as.double(kkconst),as.double(sigma),x=as.double(x),y=as.double(y), z=as.double(z),PACKAGE="cycleanalysis")
   #Return to x,y coords
   cbind(pos$x,pos$y,pos$z)
 }

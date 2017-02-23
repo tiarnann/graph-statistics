@@ -516,11 +516,11 @@ bn<-function(dat,method=c("mple.triad","mple.dyad","mple.edge","mtle"),param.see
   #Extract the necessary sufficient statistics
   if(match.arg(method)%in%c("mple.edge","mple.dyad")){  #Use dyad census stats
     stats<-matrix(0,nrow=n-1,ncol=4)
-    stats<-matrix(.C("bn_dyadstats_R",as.integer(dat),as.double(n), stats=as.double(stats),PACKAGE="sna")$stats,ncol=4)
+    stats<-matrix(.C("bn_dyadstats_R",as.integer(dat),as.double(n), stats=as.double(stats),PACKAGE="cycleanalysis")$stats,ncol=4)
     stats<-stats[apply(stats[,2:4],1,sum)>0,]  #Strip uneeded rows
   }else if(match.arg(method)=="mple.triad"){          #Use full dyad stats
     stats<-matrix(0,nrow=n,ncol=n)
-    stats<-matrix(.C("bn_triadstats_R",as.integer(dat),as.double(n), stats=as.double(stats),PACKAGE="sna")$stats,nrow=n,ncol=n)
+    stats<-matrix(.C("bn_triadstats_R",as.integer(dat),as.double(n), stats=as.double(stats),PACKAGE="cycleanalysis")$stats,nrow=n,ncol=n)
   }else if(match.arg(method)=="mtle"){                #Use triad census stats
     stats<-as.vector(triad.census(dat))  #Obtain triad census
   }
@@ -564,7 +564,7 @@ bn<-function(dat,method=c("mple.triad","mple.dyad","mple.edge","mtle"),param.see
     out$triads<-stats
   else
     out$triads<-as.vector(triad.census(dat))
-  out$triads.pred<-.C("bn_ptriad_R", as.double(out$pi),as.double(out$sigma),as.double(out$rho), as.double(out$d),pt=as.double(rep(0,16)),PACKAGE="sna")$pt
+  out$triads.pred<-.C("bn_ptriad_R", as.double(out$pi),as.double(out$sigma),as.double(out$rho), as.double(out$d),pt=as.double(rep(0,16)),PACKAGE="cycleanalysis")$pt
   names(out$triads.pred)<-c("003", "012", "102", "021D", "021U", "021C", "111D", "111U", "030T", "030C", "201", "120D", "120U", "120C", "210", "300")
   names(out$triads)<-names(out$triads.pred)
   #Add GOF for dyads, using triad distribution
@@ -601,7 +601,7 @@ bn.nlpl.dyad<-function(p,stats,fixed=rep(NA,4),...){
   p[!is.na(fixed)]<-fixed[!is.na(fixed)]
   #Calculate the pseudolikelihood
   lpl<-0
-  lpl<-.C("bn_lpl_dyad_R",as.double(stats),as.double(NROW(stats)), as.double(p[1]),as.double(p[2]),as.double(p[3]),as.double(p[4]), lpl=as.double(lpl),PACKAGE="sna")$lpl
+  lpl<-.C("bn_lpl_dyad_R",as.double(stats),as.double(NROW(stats)), as.double(p[1]),as.double(p[2]),as.double(p[3]),as.double(p[4]), lpl=as.double(lpl),PACKAGE="cycleanalysis")$lpl
   -lpl
 }
 
@@ -631,7 +631,7 @@ bn.nlpl.triad<-function(p,dat,stats,fixed=rep(NA,4),...){
   p[!is.na(fixed)]<-fixed[!is.na(fixed)]
   #Calculate the pseudolikelihood
   lpl<-0
-  lpl<-.C("bn_lpl_triad_R",as.integer(dat),as.double(stats), as.double(NROW(stats)),as.double(p[1]),as.double(p[2]),as.double(p[3]), as.double(p[4]), lpl=as.double(lpl),PACKAGE="sna")$lpl
+  lpl<-.C("bn_lpl_triad_R",as.integer(dat),as.double(stats), as.double(NROW(stats)),as.double(p[1]),as.double(p[2]),as.double(p[3]), as.double(p[4]), lpl=as.double(lpl),PACKAGE="cycleanalysis")$lpl
   -lpl
 }
 
@@ -643,7 +643,7 @@ bn.nltl<-function(p,stats,fixed=rep(NA,4),...){
   p[!is.na(fixed)]<-fixed[!is.na(fixed)]
   #Calculate the triad likelihood
   pt<-rep(0,16)
-  triprob<-.C("bn_ptriad_R", as.double(p[1]),as.double(p[2]),as.double(p[3]), as.double(p[4]),pt=as.double(pt),PACKAGE="sna")$pt
+  triprob<-.C("bn_ptriad_R", as.double(p[1]),as.double(p[2]),as.double(p[3]), as.double(p[4]),pt=as.double(pt),PACKAGE="cycleanalysis")$pt
   -sum(stats*log(triprob))
 }
 
@@ -661,7 +661,7 @@ brokerage<-function(g,cl){
   icl<-match(cl,classes)
   #Compute individual brokerage measures
   br<-matrix(0,N,5)
-  br<-matrix(.C("brokerage_R",as.double(g),as.integer(N),as.integer(m), as.integer(icl), brok=as.double(br),PACKAGE="sna",NAOK=TRUE)$brok,N,5)
+  br<-matrix(.C("brokerage_R",as.double(g),as.integer(N),as.integer(m), as.integer(icl), brok=as.double(br),PACKAGE="cycleanalysis",NAOK=TRUE)$brok,N,5)
   br<-cbind(br,apply(br,1,sum))
   #Global brokerage measures
   gbr<-apply(br,2,sum)
@@ -952,7 +952,7 @@ lnam<-function(y,x=NULL,W1=NULL,W2=NULL,theta.seed=NULL,null.model=c("meanstd","
      m<-length(w)
      n<-dim(a)[2]
      mat<-as.double(matrix(0,n,n))
-     matrix(.C("aggarray3d_R",as.double(a),as.double(w),mat=mat,as.integer(m), as.integer(n),PACKAGE="sna",NAOK=TRUE)$mat,n,n)
+     matrix(.C("aggarray3d_R",as.double(a),as.double(w),mat=mat,as.integer(m), as.integer(n),PACKAGE="cycleanalysis",NAOK=TRUE)$mat,n,n)
    }
   #Estimate covariate effects, conditional on autocorrelation parameters
   betahat<-function(y,X,W1a,W2a){

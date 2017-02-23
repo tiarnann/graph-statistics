@@ -13,18 +13,18 @@
 ######################################################################
 
 .onLoad <- function(libname, pkgname){
-  library.dynam("sna", package=pkgname, lib.loc=libname)
+  library.dynam("cycleanalysis", package=pkgname, lib.loc=libname)
 }
 
 .onAttach <- function(libname, pkgname){
-  temp<-packageDescription("sna")
+  temp<-packageDescription("cycleanalysis")
   msg<-paste(temp$Package,": ",temp$Title,"\n",
       "Version ",temp$Version,
       " created on ",
       temp$Date,".\n", sep="")
   msg<-paste(msg,"copyright (c) 2005, Carter T. Butts, University of California-Irvine\n",sep="")
-  msg<-paste(msg,'For citation information, type citation("sna").\n')
-  msg<-paste(msg,'Type help(package="sna") to get started.\n')
+  msg<-paste(msg,'For citation information, type citation("cycleanalysis").\n')
+  msg<-paste(msg,'Type help(package="cycleanalysis") to get started.\n')
   packageStartupMessage(msg)
 }
 

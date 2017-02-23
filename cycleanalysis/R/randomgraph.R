@@ -37,7 +37,7 @@ rewire.ud<-function(g,p,return.as.edgelist=FALSE){
   n<-dim(g)[1]
   nv<-dim(g)[2]
   #Perform the rewiring, and return the result
-  rewired<-.C("udrewire_R",g=as.double(g),as.double(n),as.double(nv), as.double(p),PACKAGE="sna")
+  rewired<-.C("udrewire_R",g=as.double(g),as.double(n),as.double(nv), as.double(p),PACKAGE="cycleanalysis")
   if(!return.as.edgelist)
     array(rewired$g,dim=c(n,nv,nv))
   else
@@ -59,7 +59,7 @@ rewire.ws<-function(g,p,return.as.edgelist=FALSE){
   n<-dim(gi)[1]
   nv<-dim(gi)[2]
   #Perform the rewiring, and return the result
-  rewired<-.C("wsrewire_R",as.double(gi),go=as.double(go),as.double(n), as.double(nv),as.double(p),PACKAGE="sna")
+  rewired<-.C("wsrewire_R",as.double(gi),go=as.double(go),as.double(n), as.double(nv),as.double(p),PACKAGE="cycleanalysis")
   if(!return.as.edgelist)
     array(rewired$go,dim=c(n,nv,nv))
   else
@@ -89,7 +89,7 @@ rgbn<-function(n,nv,param=list(pi=0,sigma=0,rho=0,d=0.5,delta=0),burn=nv*nv*5*1e
     d<-matrix(0,nv,nv)
   #Take the draws
   if(match.arg(method)=="mcmc")
-    g<-array(.C("bn_mcmc_R",g=as.integer(g),as.double(nv),as.double(n), as.double(burn),as.integer(thin),as.double(p[1]),as.double(p[2]),as.double(p[3]),as.double(d), as.double(p[4]),as.integer(dichotomize.sib.effects),PACKAGE="sna")$g,dim=c(n,nv,nv))
+    g<-array(.C("bn_mcmc_R",g=as.integer(g),as.double(nv),as.double(n), as.double(burn),as.integer(thin),as.double(p[1]),as.double(p[2]),as.double(p[3]),as.double(d), as.double(p[4]),as.integer(dichotomize.sib.effects),PACKAGE="cycleanalysis")$g,dim=c(n,nv,nv))
   else{
     if(any(d>0)){        #If d==0, just return empty graphs
       if(all(d==1)){     #If d==1, just return complete graphs (no delta support yet!)
@@ -101,7 +101,7 @@ rgbn<-function(n,nv,param=list(pi=0,sigma=0,rho=0,d=0.5,delta=0),burn=nv*nv*5*1e
         d[d==0]<-1e-10     #CFTP algorithm not so happy with 0s
         d[d==1]<-1-1e-10   #Doesn't like exact 1s, either
         for(i in 1:n){
-          g[i,,]<-matrix(.C("bn_cftp_R",g=as.integer(g[i,,]),as.integer(nv), as.double(p[1]),as.double(p[2]),as.double(p[3]),as.double(d), as.integer(maxiter),as.integer(dichotomize.sib.effects),PACKAGE="sna",NAOK=TRUE)$g,nv,nv)
+          g[i,,]<-matrix(.C("bn_cftp_R",g=as.integer(g[i,,]),as.integer(nv), as.double(p[1]),as.double(p[2]),as.double(p[3]),as.double(d), as.integer(maxiter),as.integer(dichotomize.sib.effects),PACKAGE="cycleanalysis",NAOK=TRUE)$g,nv,nv)
         }
       }
     }
@@ -284,11 +284,11 @@ rgraph<-function(n,m=1,tprob=0.5,mode="digraph",diag=FALSE,replace=FALSE,tielist
     }
     for(i in 1:m){
       if(length(dim(tprob))==3)
-        g[[i]]<-.Call("rgbern_R",n,tprob[i,,],directed,diag,pmode,PACKAGE="sna")
+        g[[i]]<-.Call("rgbern_R",n,tprob[i,,],directed,diag,pmode,PACKAGE="cycleanalysis")
       else if(length(dim(tprob))==2)
-        g[[i]]<-.Call("rgbern_R",n,tprob,directed,diag,pmode,PACKAGE="sna")
+        g[[i]]<-.Call("rgbern_R",n,tprob,directed,diag,pmode,PACKAGE="cycleanalysis")
       else
-        g[[i]]<-.Call("rgbern_R",n,tprob[i],directed,diag,pmode,PACKAGE="sna")
+        g[[i]]<-.Call("rgbern_R",n,tprob[i],directed,diag,pmode,PACKAGE="cycleanalysis")
     }
     #Return the result
     if(return.as.edgelist){
@@ -401,7 +401,7 @@ rgws<-function(n,nv,d,z,p,return.as.edgelist=FALSE){
     lat<-array(lat,dim=c(1,tnv,tnv))
   #Rewire the copies
   g<-lat
-  lat<-array(.C("wsrewire_R",as.double(lat),g=as.double(g),as.double(n), as.double(tnv),as.double(p),PACKAGE="sna")$g,dim=c(n,tnv,tnv))
+  lat<-array(.C("wsrewire_R",as.double(lat),g=as.double(g),as.double(n), as.double(tnv),as.double(p),PACKAGE="cycleanalysis")$g,dim=c(n,tnv,tnv))
   #Return the result
   if(return.as.edgelist)
     as.edgelist.sna(lat)

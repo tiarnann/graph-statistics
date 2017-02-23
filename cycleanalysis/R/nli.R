@@ -76,7 +76,7 @@ betweenness<-function(dat,g=1,nodes=NULL,gmode="digraph",diag=FALSE,tmaxdev=FALS
         precomp<-FALSE
       }
       #Do the computation
-      bet<-.Call("betweenness_R",dat,n,NROW(dat),meas,precomp,ignore.eval, geodist.precomp$gdist,geodist.precomp$counts,geodist.precomp$predecessors,NAOK=TRUE,PACKAGE="sna")
+      bet<-.Call("betweenness_R",dat,n,NROW(dat),meas,precomp,ignore.eval, geodist.precomp$gdist,geodist.precomp$counts,geodist.precomp$predecessors,NAOK=TRUE,PACKAGE="cycleanalysis")
       if((cmode=="undirected")||(gmode=="graph"))
          bet<-bet/2
       #Return the results
@@ -224,7 +224,7 @@ degree<-function(dat,g=1,nodes=NULL,gmode="digraph",diag=FALSE,tmaxdev=FALSE,cmo
       if(!(cmode%in%c("indegree","outdegree","freeman")))
         stop("Unknown cmode in degree.\n")
       #Calculate the scores
-      deg<-.C("degree_R",as.double(dat),as.integer(m),as.integer(cm), as.integer(diag),as.integer(ignore.eval),deg=as.double(rep(0,n)), PACKAGE="sna",NAOK=TRUE)$deg
+      deg<-.C("degree_R",as.double(dat),as.integer(m),as.integer(cm), as.integer(diag),as.integer(ignore.eval),deg=as.double(rep(0,n)), PACKAGE="cycleanalysis",NAOK=TRUE)$deg
       if(rescale)
          deg<-deg/sum(deg)
       if(!is.null(nodes))
@@ -270,7 +270,7 @@ evcent<-function(dat,g=1,nodes=NULL,gmode="digraph",diag=FALSE,tmaxdev=FALSE,res
       if(use.eigen){
         ev<-eigen(dat)$vectors[,1]
       }else{
-        ev<-.C("evcent_R",as.double(dat),as.integer(n),as.integer(NROW(dat)), ev=as.double(rep(1,n)),as.double(tol),as.integer(maxiter),as.integer(1),as.integer(ignore.eval),NAOK=TRUE,PACKAGE="sna")$ev
+        ev<-.C("evcent_R",as.double(dat),as.integer(n),as.integer(NROW(dat)), ev=as.double(rep(1,n)),as.double(tol),as.integer(maxiter),as.integer(1),as.integer(ignore.eval),NAOK=TRUE,PACKAGE="cycleanalysis")$ev
       }
       if(rescale)
          ev<-ev/sum(ev)
@@ -304,7 +304,7 @@ flowbet<-function(dat,g=1,nodes=NULL,gmode="digraph",diag=FALSE,tmaxdev=FALSE,cm
     #Wrapper for the Edmonds-Karp max-flow algorithm
     mflow<-function(x,src,snk){
       .C("maxflow_EK_R",as.double(x),as.integer(NROW(x)),as.integer(src-1),
-        as.integer(snk-1),flow=as.double(0),NAOK=TRUE,PACKAGE="sna")$flow
+        as.integer(snk-1),flow=as.double(0),NAOK=TRUE,PACKAGE="cycleanalysis")$flow
     }
     #Start by obtaining all-pairs max-solutions
     maxflo<-matrix(Inf,n,n)
@@ -370,7 +370,7 @@ gilschmidt <- function(dat,g=1,nodes=NULL,gmode="digraph",diag=FALSE,tmaxdev=FAL
       return((n-2)/2)
   }
   #No such luck.  Well, let's compute.
-  gs<-.C("gilschmidt_R",as.double(g),as.integer(n), as.integer(NROW(g)), scores=double(n), as.integer(normalize), PACKAGE="sna", NAOK=TRUE)$scores
+  gs<-.C("gilschmidt_R",as.double(g),as.integer(n), as.integer(NROW(g)), scores=double(n), as.integer(normalize), PACKAGE="cycleanalysis", NAOK=TRUE)$scores
   gs[is.nan(gs)]<-0
   if(is.null(nodes))
     nodes<-1:n
@@ -505,7 +505,7 @@ loadcent<-function(dat,g=1,nodes=NULL,gmode="digraph",diag=FALSE,tmaxdev=FALSE,c
         precomp<-FALSE
       }
       #Do the computation (we use the betweenness routine, oddly)
-      lc<-.Call("betweenness_R",dat,n,NROW(dat),8,precomp,ignore.eval, geodist.precomp$gdist,geodist.precomp$counts,geodist.precomp$predecessors,NAOK=TRUE,PACKAGE="sna")
+      lc<-.Call("betweenness_R",dat,n,NROW(dat),8,precomp,ignore.eval, geodist.precomp$gdist,geodist.precomp$counts,geodist.precomp$predecessors,NAOK=TRUE,PACKAGE="cycleanalysis")
       #Return the results
       if(rescale)
          lc<-lc/sum(lc)
@@ -628,7 +628,7 @@ stresscent<-function(dat,g=1,nodes=NULL,gmode="digraph",diag=FALSE,tmaxdev=FALSE
         precomp<-FALSE
       }
       #Do the computation (we use the betweenness routine, oddly)
-      str<-.Call("betweenness_R",dat,n,NROW(dat),7,precomp,ignore.eval, geodist.precomp$gdist,geodist.precomp$counts,geodist.precomp$predecessors,NAOK=TRUE,PACKAGE="sna")
+      str<-.Call("betweenness_R",dat,n,NROW(dat),7,precomp,ignore.eval, geodist.precomp$gdist,geodist.precomp$counts,geodist.precomp$predecessors,NAOK=TRUE,PACKAGE="cycleanalysis")
       if(cmode=="undirected")
          str<-str/2
       #Return the results

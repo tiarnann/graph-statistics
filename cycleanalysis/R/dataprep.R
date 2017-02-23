@@ -876,7 +876,7 @@ symmetrize<-function(mats,rule="weak",return.as.edgelist=FALSE){
        isloop<-mats[,1]==mats[,2]
        loops<-mats[isloop,,drop=FALSE]
        mats<-mats[!isloop,,drop=FALSE]
-       dc<-.C("dyadcode_R",as.double(mats),as.integer(n),as.integer(NROW(mats)), dc=as.double(rep(0,NROW(mats))),PACKAGE="sna",NAOK=TRUE)$dc
+       dc<-.C("dyadcode_R",as.double(mats),as.integer(n),as.integer(NROW(mats)), dc=as.double(rep(0,NROW(mats))),PACKAGE="cycleanalysis",NAOK=TRUE)$dc
        isdup<-duplicated(dc)
        mats<-mats[!isdup,,drop=FALSE]
        mats<-rbind(mats,mats[,c(2,1,3)],loops)
@@ -884,7 +884,7 @@ symmetrize<-function(mats,rule="weak",return.as.edgelist=FALSE){
        isloop<-mats[,1]==mats[,2]
        loops<-mats[isloop,,drop=FALSE]
        mats<-mats[!isloop,,drop=FALSE]
-       dc<-.C("dyadcode_R",as.double(mats),as.integer(n),as.integer(NROW(mats)), dc=as.double(rep(0,NROW(mats))),PACKAGE="sna",NAOK=TRUE)$dc
+       dc<-.C("dyadcode_R",as.double(mats),as.integer(n),as.integer(NROW(mats)), dc=as.double(rep(0,NROW(mats))),PACKAGE="cycleanalysis",NAOK=TRUE)$dc
        isdup<-duplicated(dc)
        mats<-mats[isdup,,drop=FALSE]
        mats<-rbind(mats,mats[,c(2,1,3)],loops)
