@@ -5,16 +5,16 @@
 
 //ID LISTS & NODES
 // Structures
-struct _Node {
+typedef struct _Node {
     char *id;
     struct _Node *next;
-} typedef Node;
+} Node;
 
-struct _Cycle {
+typedef struct _Cycle {
 	int size;
     Node *head;
     Node *tail;
-} typedef Cycle;
+} Cycle;
 
 /**
  * [createNode creates new Node with passed id]

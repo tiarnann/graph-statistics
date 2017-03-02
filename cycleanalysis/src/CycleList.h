@@ -1,64 +1,91 @@
-#ifndef CYCLE_H
-#define CYCLE_H
+#ifndef CYCLE_LIST_H
+#define CYCLE_LIST_H
 #include <stdio.h>
 #include <stdlib.h>
 #include "Cycle.h"
 
+typedef struct _CycleListNode{
+    struct _Cycle *list;
+    struct _CycleListNode *next;
+} CycleListNode;
 
-//-----------------------------------------------------------------------------------------------
-//LISTNODES & LISTS OF LISTNODES
-//Structures
-struct _CycleList{
+typedef struct _CycleList{
 	int size;
-    Cycle *head;
-    Cycle *tail;
-} typedef CycleList;
+    struct _CycleListNode *head;
+    struct _CycleListNode *tail;
+} CycleList;
 
-//Constructors
 
+CycleListNode *createCycleListNode(){
+	CycleListNode *result = malloc(sizeof(CycleListNode));
+    result -> list = NULL;
+    result -> next = NULL;
+    return result;
+}
+
+/**
+ * [createCycleList creates new empty cycle list]
+ * @return {CycleList} [empty cycle list]
+ */
 CycleList *createCycleList(){
     CycleList *result = malloc(sizeof(CycleList));
     result -> head = NULL;
     result -> tail = NULL;
-    result.size = 0;
+    result -> size = 0;
     return result;
 };
 
-// Functions
+/**
+ * [appendCycle  [appends cycle to cycle list]
+ * @param {Cycle} cycle 	[cycle to add to list]
+ * @param {CycleList} list  [list to add cycle to]
+ */
 void appendCycle (Cycle *cycle, CycleList *list){
+	CycleListNode *result= malloc(sizeof(CycleListNode));
+	result -> list = cycle;
 	//append cycle to list
     if (list -> head == NULL){
-		list -> head = cycle;
-		list -> tail = cycle;
+		list -> head = result;
+		list -> tail = result;
     }
 	else {
-		list -> tail -> next = cycle;
-		list -> tail = cycle;
+		list -> tail -> next = result;
+		list -> tail = result;
 	}	
-	list.size += 1;
+	list -> size += 1;
 }
 
+/**
+ * [printCycleList prints all cycles]
+ * @param list [list of cycles]
+ */
 void printCycleList(CycleList *list) {
 	if(list == NULL) return;
 
-	CycleList *current = list->head;
+	CycleListNode *current = list -> head;
 
 	while(current != NULL){
-		printCycle(current);
-		current = current-> next;
+		printCycle(current -> list);
+		printf("---\n");
+		current = current -> next;
 	}
 }
 
+/**
+ * [freeCycleList frees CycleList and all Cycles contained within that list]
+ * @param list [description]
+ */
 void freeCycleList(CycleList *list)
 {
-	Cycle* current = cycle -> head;
-	Cycle* next;
+	CycleListNode* current = list -> head;
+	CycleListNode* next;
 	while(current != NULL){
 		next = current -> next;
-		freeCycle(current);
+		freeCycle(current -> list);
+		free(current);
 		current = next; 
 	}
-	freeCycle(cycle);
+	free(list);
 } 
 
-#endif CYCLE_H
+#endif
