@@ -69,9 +69,6 @@ void printCycleList(CycleList *list) {
 		printCycle(current -> list);
 		printf("---\n");
 		current = current -> next;
-		if(current == NULL){
-			exit(1243);
-		}
 	}
 }
 
