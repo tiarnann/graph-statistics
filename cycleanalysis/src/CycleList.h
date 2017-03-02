@@ -41,8 +41,9 @@ CycleList *createCycleList(){
  * @param {CycleList} list  [list to add cycle to]
  */
 void appendCycle (Cycle *cycle, CycleList *list){
-	CycleListNode *result= malloc(sizeof(CycleListNode));
+	CycleListNode *result= createCycleListNode();
 	result -> list = cycle;
+
 	//append cycle to list
     if (list -> head == NULL){
 		list -> head = result;
@@ -65,9 +66,12 @@ void printCycleList(CycleList *list) {
 	CycleListNode *current = list -> head;
 
 	while(current != NULL){
-		printCycle(current -> list);
+		// printCycle(current -> list);
 		printf("---\n");
 		current = current -> next;
+		if(current == NULL){
+			exit(1243);
+		}
 	}
 }
 
