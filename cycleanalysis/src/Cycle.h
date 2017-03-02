@@ -12,9 +12,8 @@ struct _Node {
 
 struct _Cycle {
 	int size;
-    struct Node *head;
-    struct Node *tail;
-    int length;
+    Node *head;
+    Node *tail;
 } typedef Cycle;
 
 /**
@@ -23,7 +22,7 @@ struct _Cycle {
  * @return {Node}   [newly created node]
  */
 Node *createNode(char* id){
-    Node*result = malloc(sizeof(Node));
+    Node* result = malloc(sizeof(Node));
     result -> id = id;
     result -> next = NULL;
     return result;
@@ -49,7 +48,7 @@ Cycle *createCycle(){
  */
 void appendNode(char *id, Cycle *cycle){
 	//set up new node
-	Node *newNode = createIDNode(id);
+	Node *newNode = createNode(id);
 
 	//append node to cycle
     if (cycle -> head == NULL){
@@ -60,9 +59,16 @@ void appendNode(char *id, Cycle *cycle){
 		cycle -> tail -> next = newNode;
 		cycle -> tail = newNode;
 	}
-	cycle -> size++;
+	cycle -> size += 1;
 }
 
+/**TODO
+ * [removeNode removes node at certain index. this does not free the Node pointer!]
+ * @return {int} [0 if node was successfully removed, -1 if not]
+ */
+int removeNode(){
+	return -1;
+}
 
 /**
  * [printCycle prints ids of nodes within given cycle]
@@ -86,23 +92,22 @@ void printCycle(Cycle *cycle) {
  */
 int getCycleLength(Cycle *cycle) {
 	if(cycle == NULL) return -1;
-	return cycle.size;
+	return cycle -> size;
 }
 
 /**
  * [freeCycle frees cycle pointers and nodes within that cycle]
  * @param {Cycle} cycle [cycle of nodes]
  */
-void freeCycle(Cycle *list)
-{
-	Node* current = list->head;
+void freeCycle(Cycle *cycle) {
+	Node* current = cycle->head;
 	Node* next;
 	while(current != NULL){
 		next = current -> next;
 		free(current);
 		current = next; 
 	}
-	free(list);
+	free(cycle);
 }
 
-#endif CYCLE_H
+#endif
