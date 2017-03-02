@@ -66,7 +66,7 @@ void printCycleList(CycleList *list) {
 	CycleListNode *current = list -> head;
 
 	while(current != NULL){
-		// printCycle(current -> list);
+		printCycle(current -> list);
 		printf("---\n");
 		current = current -> next;
 		if(current == NULL){
