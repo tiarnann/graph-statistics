@@ -4,6 +4,8 @@
 #include "utils.h"
 #include "paths.h"
 #include "pathsExtension.h"
+#include "Cycle.h"
+#include "CycleList.h"
 
 void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *cccount, int maxlen, int directed, int byvertex, int cocycles)
   /*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether a cycle co-membership matrix should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurse.*/
@@ -102,6 +104,10 @@ void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, i
     ng->iel[i]=NULL;
     ng->oel[i]=NULL;
   }
+
+  /*Initialise new CycleList object */
+  CycleList *cyclelist = createCycleList();
+
 
   /*Walk the graph, adding edges and accumulating cycles*/
   Rprintf("Building graph/accumulating cycles\n\tn=%d,%d\n",n,ng->n);
