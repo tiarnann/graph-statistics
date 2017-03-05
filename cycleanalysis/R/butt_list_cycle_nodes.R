@@ -39,7 +39,7 @@ kcycle.censusExtension<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=
 
 
   #Calculate the cycle information
-  ccen<-.C("cycleCensusID_R",as.integer(dat), as.integer(n), as.integer(NROW(dat)), count=as.double(count), cccount=as.double(cccount), as.integer(maxlen), as.integer(directed), as.integer(tabulate.by.vertex), as.integer(cocycles),PACKAGE="cycleanalysis")
+  ccen<-.C("cycleCensusID_R",as.integer(dat), as.integer(n), as.integer(NROW(dat)), count=as.double(count), cccount=as.double(cccount), as.integer(maxlen), as.integer(directed), as.integer(tabulate.by.vertex), as.integer(cocycles), as.array(c(vnam)),PACKAGE="cycleanalysis")
 
   #Coerce the cycle counts into the right form
   if(!tabulate.by.vertex){
@@ -62,6 +62,7 @@ kcycle.censusExtension<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=
 
   #Return the result
   out<-list(cycle.count=count)
+  out$vnam <- c("Agg",vnam)
   out$cycle.ccenCount<-ccen$count
   #out$cycle.ccenCccount<-ccen$cccount
   if(cocycles>0)

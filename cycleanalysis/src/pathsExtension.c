@@ -8,18 +8,19 @@
 #include "CycleList.h"
 #include "string.h"
 
-void addListToCycleList(int ids[], int length, CycleList *cyclelist) {
+void addListToCycleList(char **ids, int length, CycleList *cyclelist) {
   //Create cycle
   Cycle *cycle = createCycle();
   for (int i=0; i<=length; i++)
-    appendNode("char", cycle);
+    appendNode(ids[i], cycle);
 
   //Append cycle to cyclelist
   appendCycle(cycle, cyclelist);
 }
 
 void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *availnodes, int availcount, int *usednodes, int curlen, double *count,
-                           double *cpcount, double *dpcount, int maxlen, int directed, int byvertex, int copaths, int dyadpaths, int ids[], int id_idx, CycleList *cyclelist)
+                           double *cpcount, double *dpcount, int maxlen, int directed, int byvertex, int copaths, int dyadpaths, char *ids[],
+                           int id_idx, CycleList *cyclelist, char **id_names)
 /*Recursively count the paths from src to dest.  (This is an adaptation of the routine I wrote for statnet.)  count should be vector of path
   counts (starting with length 1) if !byvertex, or else a matrix of dimension (maxlen-1)x(n+1) whose first column contains aggregate counts and
   i+1th column contains counts for vertex i.  If copaths==1, cpcount should contain an nxn matrix containing path co-membership counts.  If
@@ -31,7 +32,7 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
   int *newavail,i,j,k,newavailcount,*newused,n;
 
   //add id to id list
-  ids[id_idx++] = curnode;
+  ids[id_idx++] = id_names[curnode];
 
   /*Rprintf("\t\t\tRecursion: src=%d, dest=%d, curnode=%d, curlen=%d, availcount=%d\n",src,dest,curnode,curlen,availcount);*/
 
@@ -202,13 +203,13 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
       if(directed||(curnode<newavail[i])){
         if(snaIsAdjacent(curnode,newavail[i],g,2)){
           edgewisePathRecurseID(g,src,dest,newavail[i],newavail,newavailcount,newused,curlen+1,count,cpcount,dpcount,maxlen,directed,byvertex,
-                              copaths,dyadpaths,ids,id_idx,cyclelist);
+                              copaths,dyadpaths,ids,id_idx,cyclelist,id_names);
         }
       }
       else{
         if(snaIsAdjacent(newavail[i],curnode,g,2)){
           edgewisePathRecurseID(g,src,dest,newavail[i],newavail,newavailcount,newused,curlen+1,count,cpcount,dpcount,maxlen,directed,byvertex,
-                              copaths,dyadpaths,ids,id_idx,cyclelist);
+                              copaths,dyadpaths,ids,id_idx,cyclelist,id_names);
         }
       }
     }
@@ -242,7 +243,7 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
 
 
 
-void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *cccount, int maxlen, int directed, int byvertex, int cocycles, CycleList *cyclelist)
+void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *cccount, int maxlen, int directed, int byvertex, int cocycles, CycleList *cyclelist, char **id_names)
   /*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether a cycle co-membership matrix should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurseID.*/
 {
   int n,i,j,*availnodes,*usednodes;
@@ -258,11 +259,9 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
 
     //add new Cycle to CycleList
     Cycle *cycle = createCycle();
-    //char *tmp = src;
-    appendNode("tmp", cycle);
-    //tmp = (*char) dest;
-    appendNode("tmp", cycle);
-    appendCycle(cycle, cyclelist);  //TODO change node ID's being passed in
+    appendNode(id_names[src], cycle);
+    appendNode(id_names[dest], cycle);
+    appendCycle(cycle, cyclelist);
 
     if(byvertex){
       count[ (1+src)*(maxlen-1) ]++;
@@ -304,23 +303,23 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
 
   //Create list of ID's
   int id_idx = 0;
-  int ids[maxlen];
-  ids[id_idx++] = src;
-  ids[id_idx++] = dest;
+  char *ids[maxlen];
+  ids[id_idx++] = id_names[src];
+  ids[id_idx++] = id_names[dest];
 
   /*Rprintf("\t\tBeginning recursion\n");*/
   for(i=0;i<n-2;i++) {               /*Recurse on each available vertex*/
     if(directed||(dest<availnodes[i])){
       if(snaIsAdjacent(dest,availnodes[i],g,2)){
         edgewisePathRecurseID(g,dest,src,availnodes[i],availnodes,n-2,usednodes,1,
-                            count,cccount,NULL,maxlen,directed,byvertex,cocycles,0,ids,id_idx,cyclelist);
+                            count,cccount,NULL,maxlen,directed,byvertex,cocycles,0,ids,id_idx,cyclelist,id_names);
       }
     }
     else{
       if(snaIsAdjacent(availnodes[i],dest,g,2)){
 
         edgewisePathRecurseID(g,dest,src,availnodes[i],availnodes,n-2,usednodes,1,
-                            count,cccount,NULL,maxlen,directed,byvertex,cocycles,0,ids,id_idx,cyclelist);
+                            count,cccount,NULL,maxlen,directed,byvertex,cocycles,0,ids,id_idx,cyclelist,id_names);
       }
     }
   }
@@ -342,8 +341,9 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
 
 
 
-void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, int *pmaxlen, int *pdirected, int *pbyvertex, int *pcocycles)
-/*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether cycle co-membership counts should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurseID.*/
+void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, int *pmaxlen, int *pdirected, int *pbyvertex, int *pcocycles, char **id_names)
+/*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether
+  cycle counts should be broken down by participating vertex, and whether cycle co-membership counts should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurseID.*/
 /*  (*pn) is the number of nodes */
 {
   int i,r,c,n,m,id;
@@ -393,7 +393,7 @@ void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, i
       /*First, accumulate the cycles to be formed by the (r,c) edge*/
       //Rprintf("\tEdge at (%d,%d); counting cycles\n",r+1,c+1);
       edgewiseCycleCensusID(ng,r,c,count,cccount,*pmaxlen,*pdirected,
-        *pbyvertex,*pcocycles, cyclelist);
+        *pbyvertex,*pcocycles, cyclelist, id_names);
       //for(int k=0;k<*pmaxlen-1;k++){
       //  Rprintf("%d:%d ",k+2,(int)(count[k]));
       //  Rprintf("\n");
