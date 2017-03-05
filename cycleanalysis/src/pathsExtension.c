@@ -8,8 +8,206 @@
 #include "CycleList.h"
 #include "string.h"
 
+void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *availnodes, int availcount, int *usednodes, int curlen, double *count,
+                           double *cpcount, double *dpcount, int maxlen, int directed, int byvertex, int copaths, int dyadpaths, int ids[], int id_idx, CycleList *cyclelist)
+/*Recursively count the paths from src to dest.  (This is an adaptation of the routine I wrote for statnet.)  count should be vector of path
+  counts (starting with length 1) if !byvertex, or else a matrix of dimension (maxlen-1)x(n+1) whose first column contains aggregate counts and
+  i+1th column contains counts for vertex i.  If copaths==1, cpcount should contain an nxn matrix containing path co-membership counts.  If
+  copaths=2, cpcount should contain a (maxlen-1)xnxn array containing path co-membership counts at each length.  This is ignored if copaths==0.
+  (Odd note: if this is being used to construct a path census, rather than a cycle census, maxlen should be one greater than the true maximum
+  length.  It looks wrong, but it isn't.  All of the maxlen-1 stuff in here is also correct, even though (e.g., for dyad paths) it may appear
+  otherwise.)*/
+{
+  int *newavail,i,j,k,newavailcount,*newused,n;
+
+  //add dest node's ID to ids (id list)
+  ids[id_idx++] = curnode;
+
+  /*Rprintf("\t\t\tRecursion: src=%d, dest=%d, curnode=%d, curlen=%d, availcount=%d\n",src,dest,curnode,curlen,availcount);*/
+
+  n=g->n;
+  // Rprintf("N=%d\n",n); N = Length
+  /*If we've found a path to the destination, increment the census vector*/
+  if(directed||(curnode<dest)){
+    if(snaIsAdjacent(curnode,dest,g,2)){
+      Rprintf("\t\t\t\t%d is adjacent to target (%d)\n",curnode+1,dest+1);
+      count[curlen]++;                       /*Basic update*/
+      if(byvertex){                          /*Update path incidence counts*/
+        for(j=0;j<curlen;j++)
+          count[curlen+(1+usednodes[j])*(maxlen-1)]++;
+          count[curlen+(1+curnode)*(maxlen-1)]++;
+          count[curlen+(1+dest)*(maxlen-1)]++;
+      }
+      if(copaths==1){                        /*Update copath incidence counts*/
+        for(j=0;j<curlen;j++){
+          for(k=j;k<curlen;k++){
+            cpcount[usednodes[j]+usednodes[k]*n]++;
+            if(k!=j)
+              cpcount[usednodes[k]+usednodes[j]*n]++;
+          }
+          cpcount[usednodes[j]+dest*n]++;
+          cpcount[dest+usednodes[j]*n]++;
+          cpcount[usednodes[j]+curnode*n]++;
+          cpcount[curnode+usednodes[j]*n]++;
+        }
+        cpcount[curnode+dest*n]++;
+        cpcount[dest+curnode*n]++;
+        cpcount[curnode+curnode*n]++;
+        cpcount[dest+dest*n]++;
+      }
+      if(copaths==2){                        /*Update copath counts using len*/
+        for(j=0;j<curlen;j++){
+          for(k=j;k<curlen;k++){
+            cpcount[curlen+usednodes[j]*(maxlen-1)+ usednodes[k]*(maxlen-1)*n]++;
+            if(k!=j)
+              cpcount[curlen+usednodes[k]*(maxlen-1)+ usednodes[j]*(maxlen-1)*n]++;
+          }
+          cpcount[curlen+usednodes[j]*(maxlen-1)+dest*(maxlen-1)*n]++;
+          cpcount[curlen+dest*(maxlen-1)+usednodes[j]*(maxlen-1)*n]++;
+          cpcount[curlen+usednodes[j]*(maxlen-1)+curnode*(maxlen-1)*n]++;
+          cpcount[curlen+curnode*(maxlen-1)+usednodes[j]*(maxlen-1)*n]++;
+        }
+        cpcount[curlen+curnode*(maxlen-1)+dest*(maxlen-1)*n]++;
+        cpcount[curlen+dest*(maxlen-1)+curnode*(maxlen-1)*n]++;
+        cpcount[curlen+dest*(maxlen-1)+dest*(maxlen-1)*n]++;
+        cpcount[curlen+curnode*(maxlen-1)+curnode*(maxlen-1)*n]++;
+      }
+      if(dyadpaths==1){                      /*Update dyadic path counts*/
+        dpcount[src+dest*n]++;
+        if(!directed)
+          dpcount[dest+src*n]++;
+      }
+      if(dyadpaths==2){                  /*Update dyadic path counts using len*/
+        dpcount[curlen+src*(maxlen-1)+dest*(maxlen-1)*n]++;
+        if(!directed)
+          dpcount[curlen+dest*(maxlen-1)+src*(maxlen-1)*n]++;
+      }
+    }
+  }
+  else{
+    if(snaIsAdjacent(dest,curnode,g,2)){
+      count[curlen]++;                       /*Basic update*/
+      if(byvertex){                          /*Update path incidence counts*/
+        for(j=0;j<curlen;j++)
+          count[curlen+(1+usednodes[j])*(maxlen-1)]++;
+          count[curlen+(1+curnode)*(maxlen-1)]++;
+          count[curlen+(1+dest)*(maxlen-1)]++;
+      }
+      if(copaths==1){                       /*Update copath incidence counts*/
+        for(j=0;j<curlen;j++){
+          for(k=j;k<curlen;k++){
+            cpcount[usednodes[j]+usednodes[k]*n]++;
+            if(k!=j)
+              cpcount[usednodes[k]+usednodes[j]*n]++;
+          }
+          cpcount[usednodes[j]+dest*n]++;
+          cpcount[dest+usednodes[j]*n]++;
+          cpcount[usednodes[j]+curnode*n]++;
+          cpcount[curnode+usednodes[j]*n]++;
+        }
+        cpcount[curnode+dest*n]++;
+        cpcount[dest+curnode*n]++;
+        cpcount[curnode+curnode*n]++;
+        cpcount[dest+dest*n]++;
+      }
+      if(copaths==2){                      /*Update copath counts using len*/
+        for(j=0;j<curlen;j++){
+          for(k=j;k<curlen;k++){
+            cpcount[curlen+usednodes[j]*(maxlen-1)+ usednodes[k]*(maxlen-1)*n]++;
+            if(k!=j)
+              cpcount[curlen+usednodes[k]*(maxlen-1)+ usednodes[j]*(maxlen-1)*n]++;
+          }
+          cpcount[curlen+usednodes[j]*(maxlen-1)+dest*(maxlen-1)*n]++;
+          cpcount[curlen+dest*(maxlen-1)+usednodes[j]*(maxlen-1)*n]++;
+          cpcount[curlen+usednodes[j]*(maxlen-1)+curnode*(maxlen-1)*n]++;
+          cpcount[curlen+curnode*(maxlen-1)+usednodes[j]*(maxlen-1)*n]++;
+        }
+        cpcount[curlen+curnode*(maxlen-1)+dest*(maxlen-1)*n]++;
+        cpcount[curlen+dest*(maxlen-1)+curnode*(maxlen-1)*n]++;
+        cpcount[curlen+curnode*(maxlen-1)+curnode*(maxlen-1)*n]++;
+        cpcount[curlen+dest*(maxlen-1)+dest*(maxlen-1)*n]++;
+      }
+      if(dyadpaths==1){                      /*Update dyadic path counts*/
+        dpcount[src+dest*n]++;
+        if(!directed)
+          dpcount[dest+src*n]++;
+      }
+      if(dyadpaths==2){                  /*Update dyadic path counts using len*/
+        dpcount[curlen+src*(maxlen-1)+dest*(maxlen-1)*n]++;
+        if(!directed)
+          dpcount[curlen+dest*(maxlen-1)+src*(maxlen-1)*n]++;
+      }
+    }
+  }
+
+  /*If possible, keep searching for novel paths*/
+  if((availcount>0)&&(curlen<maxlen-2)){
+
+    if(availcount>1){    /*Remove the current node from the available list*/
+      /*Rprintf("\t\t\tRemoving %d from available node list (availcount=%d)\n", curnode,availcount);*/
+      if((newavail=(int *)malloc(sizeof(int)*(availcount-1)))==NULL){
+        Rprintf("Unable to allocate %d bytes for available node list in edgewisePathRecurseID.  Trying to terminate recursion gracefully, but your path count is probably wrong.\n",sizeof(int)*(availcount-1));
+        return;
+      }
+      j=0;
+      for(i=0;i<availcount;i++)      /*Create the reduced list, fur passin'*/
+        if(availnodes[i]!=curnode)
+          newavail[j++]=availnodes[i];
+
+    /*Rprintf("\t\t\tBuilt newavail without apparent issue\n");*/
+    }
+    else
+        newavail=NULL;                 /*Set to NULL if we're out of nodes*/
+    newavailcount=availcount-1;      /*Decrement the available count*/
+    if(byvertex||copaths||dyadpaths){  /*Add the current node to the used list*/
+      if((newused=(int *)malloc(sizeof(int)*(curlen+1)))==NULL){
+        Rprintf("Unable to allocate %d bytes for used node list in edgewisePathRecurseID.  Trying to terminate recursion gracefully, but your path count is probably wrong.\n",sizeof(int)*(curlen+1));
+        return;
+      }
+      for(i=0;i<curlen;i++)
+        newused[i]=usednodes[i];
+      newused[curlen]=curnode;
+    }
+    else
+      newused=NULL;
+
+    /*Recurse on all available nodes*/
+    /*Rprintf("\t\t\tAbout to recurse on available nodes (newavail=%d)\n", newavailcount);*/
+    for(i=0;i<newavailcount;i++){
+      if(directed||(curnode<newavail[i])){
+        if(snaIsAdjacent(curnode,newavail[i],g,2))
+          edgewisePathRecurseID(g,src,dest,newavail[i],newavail,newavailcount,newused,curlen+1,count,cpcount,dpcount,maxlen,directed,byvertex,
+                              copaths,dyadpaths,ids,id_idx,cyclelist);
+      }
+      else{
+        if(snaIsAdjacent(newavail[i],curnode,g,2))
+          edgewisePathRecurseID(g,src,dest,newavail[i],newavail,newavailcount,newused,curlen+1,count,cpcount,dpcount,maxlen,directed,byvertex,
+                              copaths,dyadpaths,ids,id_idx,cyclelist);
+      }
+    }
+    /*Free the available node and used node lists*/
+    /*Rprintf("\t\t\tDone with available node recursion, freeing\n");*/
+    if(newavail!=NULL){
+      /*Rprintf("\t\t\t\tFreeing newavail; count=%d\n",newavailcount);*/
+      free((void *)newavail);
+    }
+    if(newused!=NULL){
+      /*Rprintf("\t\t\t\tFreeing newused; count=%d\n",curlen);*/
+      free((void *)newused);
+    }
+  }
+
+  /*Free the used node list*/
+  /*Rprintf("\t\t\tBacking out for src=%d, dest=%d, curnode=%d\n",src,dest, curnode);*/
+  /*if(usednodes!=NULL)
+   free((void *)usednodes);*/
+  /*Check for interrupts (if recursion is taking way too long...)*/
+  R_CheckUserInterrupt();
+}
+
+
 void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *cccount, int maxlen, int directed, int byvertex, int cocycles, CycleList *cyclelist)
-  /*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether a cycle co-membership matrix should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurse.*/
+  /*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether a cycle co-membership matrix should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurseID.*/
 {
   int n,i,j,*availnodes,*usednodes;
 
@@ -24,10 +222,10 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
 
     //add new Cycle to CycleList
     Cycle *cycle = createCycle();
-    char *tmp = src;
-    appendNode(tmp, cycle);
-    tmp = dest;
-    appendNode(tmp, cycle);
+    //char *tmp = src;
+    appendNode("tmp", cycle);
+    //tmp = (*char) dest;
+    appendNode("tmp", cycle);
     appendCycle(cycle, cyclelist);  //TODO check this is correct
 
     if(byvertex){
@@ -55,33 +253,49 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
     Rprintf("Unable to allocate %d bytes for available node list in edgewiseCycleCensus.  Exiting.\n",sizeof(int)*(n-2));
     return;
   }
-  j=0;                              /*Initialize the list of available nodes*/
-  for(i=0;i<n;i++)
+  j=0;                             /*Initialize the list of available nodes*/
+  for(i=0;i<n;i++) {
     if((i!=src)&&(i!=dest))
       availnodes[j++]=i;
     if(byvertex||cocycles){          /*Initialize the list of already used nodes*/
-  if((usednodes=(int *)malloc(sizeof(int)))==NULL){
-    Rprintf("Unable to allocate %d bytes for used node list in edgewiseCycleCensus.  Exiting.\n",sizeof(int));
-    return;
-  }
-  usednodes[0]=dest;
+      if((usednodes=(int *)malloc(sizeof(int)))==NULL){
+        Rprintf("Unable to allocate %d bytes for used node list in edgewiseCycleCensus.  Exiting.\n",sizeof(int));
+        return;
+      }
+      usednodes[0]=dest;
     }
-    /*Rprintf("\t\tBeginning recursion\n");*/
-    for(i=0;i<n-2;i++)               /*Recurse on each available vertex*/
+  }
+
+  //Create list of ID's
+  int id_idx = 0;
+  int ids[maxlen];
+  ids[id_idx++] = src;
+
+  /*Rprintf("\t\tBeginning recursion\n");*/
+  for(i=0;i<n-2;i++) {               /*Recurse on each available vertex*/
     if(directed||(dest<availnodes[i])){
       if(snaIsAdjacent(dest,availnodes[i],g,2))
-        edgewisePathRecurse(g,dest,src,availnodes[i],availnodes,n-2,usednodes,1,
-                            count,cccount,NULL,maxlen,directed,byvertex,cocycles,0);
-    }else{
-      if(snaIsAdjacent(availnodes[i],dest,g,2))
-        edgewisePathRecurse(g,dest,src,availnodes[i],availnodes,n-2,usednodes,1,
-                            count,cccount,NULL,maxlen,directed,byvertex,cocycles,0);
+        edgewisePathRecurseID(g,dest,src,availnodes[i],availnodes,n-2,usednodes,1,
+                            count,cccount,NULL,maxlen,directed,byvertex,cocycles,0,ids,id_idx,cyclelist);
     }
-    /*Rprintf("\t\tReturned from recursion; freeing memory\n");*/
-    if(availnodes!=NULL)
-      free((void *)availnodes);  /*Free the available node list*/
-    if(usednodes!=NULL)
-      free((void *)usednodes); /*Free the used node list, if needed*/
+    else{
+      if(snaIsAdjacent(availnodes[i],dest,g,2))
+        edgewisePathRecurseID(g,dest,src,availnodes[i],availnodes,n-2,usednodes,1,
+                            count,cccount,NULL,maxlen,directed,byvertex,cocycles,0,ids,id_idx,cyclelist);
+    }
+  }
+
+  printf("\n\nids:\n");
+  for (int i=0; i<maxlen; i++)
+    printf("%d, ", ids[i]+1);
+  printf("\n\n");
+
+  /*Rprintf("\t\tReturned from recursion; freeing memory\n");*/
+  if(availnodes!=NULL)
+    free((void *)availnodes);  /*Free the available node list*/
+  if(usednodes!=NULL)
+    free((void *)usednodes); /*Free the used node list, if needed*/
+
 }
 
 
@@ -89,7 +303,7 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
 
 
 void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, int *pmaxlen, int *pdirected, int *pbyvertex, int *pcocycles)
-/*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether cycle co-membership counts should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurse.*/
+/*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether cycle co-membership counts should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurseID.*/
 /*  (*pn) is the number of nodes */
 {
   int i,r,c,n,m,id;

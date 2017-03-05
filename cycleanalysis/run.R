@@ -12,4 +12,4 @@ adjacencyMat <- get.adjacency(net, sparse=FALSE)
 #plot(net, edge.arrow.size=.4)
 
 # maxlen is the max cycle length to search for
-cc<-kcycle.censusExtension(adjacencyMat, maxlen = 12, tabulate.by.vertex = FALSE, cycle.comembership = "bylength")
+cc<-kcycle.censusExtension(adjacencyMat, maxlen = 6, tabulate.by.vertex = FALSE, cycle.comembership = "bylength")
