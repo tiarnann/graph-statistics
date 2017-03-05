@@ -80,7 +80,8 @@ void printCycle(Cycle *cycle) {
 	Node *current = cycle -> head;
 
 	while(current != NULL){
-		printf("%s\n", current -> id);
+		printf("%s", current -> id);
+	  printf("%s", (current->next==NULL? ".": ", ") );
 		current = current -> next;
 	}
 }

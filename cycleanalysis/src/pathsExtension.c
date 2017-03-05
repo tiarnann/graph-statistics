@@ -8,6 +8,16 @@
 #include "CycleList.h"
 #include "string.h"
 
+void addListToCycleList(int ids[], int length, CycleList *cyclelist) {
+  //Create cycle
+  Cycle *cycle = createCycle();
+  for (int i=0; i<=length; i++)
+    appendNode("char", cycle);
+
+  //Append cycle to cyclelist
+  appendCycle(cycle, cyclelist);
+}
+
 void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *availnodes, int availcount, int *usednodes, int curlen, double *count,
                            double *cpcount, double *dpcount, int maxlen, int directed, int byvertex, int copaths, int dyadpaths, int ids[], int id_idx, CycleList *cyclelist)
 /*Recursively count the paths from src to dest.  (This is an adaptation of the routine I wrote for statnet.)  count should be vector of path
@@ -33,10 +43,11 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
       //Rprintf("\t\t\t\t%d is adjacent to target (%d)\n",curnode+1,dest+1);
       count[curlen]++;                       /*Basic update*/
       //TODO: remove print statements
-      printf("1st count increment:\t");
+      addListToCycleList(ids, curlen+1, cyclelist);
+      /*printf("1st count increment:\t");
       for (int i=0; i<=curlen+1; i++)
         printf("%d, ", ids[i]+1);
-      printf("\n");
+      printf("\n");*/
 
       if(byvertex){                          /*Update path incidence counts*/
         for(j=0;j<curlen;j++) {
@@ -95,10 +106,11 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
     if(snaIsAdjacent(dest,curnode,g,2)){
       count[curlen]++;                       /*Basic update*/
       //TODO: remove print statements
-      printf("2nd count increment:\t");
+      addListToCycleList(ids, curlen+1, cyclelist);
+      /*printf("2nd count increment:\t");
       for (int i=0; i<=curlen+1; i++)
         printf("%d, ", ids[i]+1);
-      printf("\n");
+      printf("\n");*/
 
       if(byvertex){                          /*Update path incidence counts*/
         for(j=0;j<curlen;j++)
@@ -200,12 +212,6 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
         }
       }
     }
-
-    /*/TODO: remove print statements
-    printf("\n\nAfter recursion loop:\n");
-    for (int i=0; i<maxlen; i++)
-      printf("%d, ", ids[i]+1);
-    printf("\n\n");*/
 
     /*Free the available node and used node lists*/
     /*Rprintf("\t\t\tDone with available node recursion, freeing\n");*/
@@ -415,7 +421,7 @@ void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, i
     }
   }
 
-  //printCycleList(cyclelist);
+  printCycleList(cyclelist);
 
   PutRNGstate();
 }
