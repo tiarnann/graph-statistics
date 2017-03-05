@@ -20,7 +20,7 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
 {
   int *newavail,i,j,k,newavailcount,*newused,n;
 
-  //add dest node's ID to ids (id list)
+  //add id to id list
   ids[id_idx++] = curnode;
 
   /*Rprintf("\t\t\tRecursion: src=%d, dest=%d, curnode=%d, curlen=%d, availcount=%d\n",src,dest,curnode,curlen,availcount);*/
@@ -30,13 +30,20 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
   /*If we've found a path to the destination, increment the census vector*/
   if(directed||(curnode<dest)){
     if(snaIsAdjacent(curnode,dest,g,2)){
-      Rprintf("\t\t\t\t%d is adjacent to target (%d)\n",curnode+1,dest+1);
+      //Rprintf("\t\t\t\t%d is adjacent to target (%d)\n",curnode+1,dest+1);
       count[curlen]++;                       /*Basic update*/
+      //TODO: remove print statements
+      printf("1st count increment:\t");
+      for (int i=0; i<=curlen+1; i++)
+        printf("%d, ", ids[i]+1);
+      printf("\n");
+
       if(byvertex){                          /*Update path incidence counts*/
-        for(j=0;j<curlen;j++)
+        for(j=0;j<curlen;j++) {
           count[curlen+(1+usednodes[j])*(maxlen-1)]++;
           count[curlen+(1+curnode)*(maxlen-1)]++;
           count[curlen+(1+dest)*(maxlen-1)]++;
+        }
       }
       if(copaths==1){                        /*Update copath incidence counts*/
         for(j=0;j<curlen;j++){
@@ -87,6 +94,12 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
   else{
     if(snaIsAdjacent(dest,curnode,g,2)){
       count[curlen]++;                       /*Basic update*/
+      //TODO: remove print statements
+      printf("2nd count increment:\t");
+      for (int i=0; i<=curlen+1; i++)
+        printf("%d, ", ids[i]+1);
+      printf("\n");
+
       if(byvertex){                          /*Update path incidence counts*/
         for(j=0;j<curlen;j++)
           count[curlen+(1+usednodes[j])*(maxlen-1)]++;
@@ -175,16 +188,25 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
     /*Rprintf("\t\t\tAbout to recurse on available nodes (newavail=%d)\n", newavailcount);*/
     for(i=0;i<newavailcount;i++){
       if(directed||(curnode<newavail[i])){
-        if(snaIsAdjacent(curnode,newavail[i],g,2))
+        if(snaIsAdjacent(curnode,newavail[i],g,2)){
           edgewisePathRecurseID(g,src,dest,newavail[i],newavail,newavailcount,newused,curlen+1,count,cpcount,dpcount,maxlen,directed,byvertex,
                               copaths,dyadpaths,ids,id_idx,cyclelist);
+        }
       }
       else{
-        if(snaIsAdjacent(newavail[i],curnode,g,2))
+        if(snaIsAdjacent(newavail[i],curnode,g,2)){
           edgewisePathRecurseID(g,src,dest,newavail[i],newavail,newavailcount,newused,curlen+1,count,cpcount,dpcount,maxlen,directed,byvertex,
                               copaths,dyadpaths,ids,id_idx,cyclelist);
+        }
       }
     }
+
+    /*/TODO: remove print statements
+    printf("\n\nAfter recursion loop:\n");
+    for (int i=0; i<maxlen; i++)
+      printf("%d, ", ids[i]+1);
+    printf("\n\n");*/
+
     /*Free the available node and used node lists*/
     /*Rprintf("\t\t\tDone with available node recursion, freeing\n");*/
     if(newavail!=NULL){
@@ -206,6 +228,14 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
 }
 
 
+
+//---------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
+
+
+
 void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *cccount, int maxlen, int directed, int byvertex, int cocycles, CycleList *cyclelist)
   /*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether a cycle co-membership matrix should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurseID.*/
 {
@@ -216,7 +246,7 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
   usednodes = NULL;
 
   /*First, check for a 2-cycle (but only if directed)*/
-  Rprintf("\t\tChecking for (%d,%d) edge\n",src+1,dest+1);
+  //Rprintf("\t\tChecking for (%d,%d) edge\n",src+1,dest+1);
   if(directed&&snaIsAdjacent(dest,src,g,2)){
     count[0]++;
 
@@ -226,7 +256,7 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
     appendNode("tmp", cycle);
     //tmp = (*char) dest;
     appendNode("tmp", cycle);
-    appendCycle(cycle, cyclelist);  //TODO check this is correct
+    appendCycle(cycle, cyclelist);  //TODO change node ID's being passed in
 
     if(byvertex){
       count[ (1+src)*(maxlen-1) ]++;
@@ -246,18 +276,18 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
     }
   }
   if(n==2)
-    return;                 /*Failsafe for graphs of order 2*/
+    return;                           /*Failsafe for graphs of order 2*/
 
   /*Perform the recursive path count*/
   if((availnodes=(int *)malloc(sizeof(int)*(n-2)))==NULL){
     Rprintf("Unable to allocate %d bytes for available node list in edgewiseCycleCensus.  Exiting.\n",sizeof(int)*(n-2));
     return;
   }
-  j=0;                             /*Initialize the list of available nodes*/
+  j=0;                                /*Initialize the list of available nodes*/
   for(i=0;i<n;i++) {
     if((i!=src)&&(i!=dest))
       availnodes[j++]=i;
-    if(byvertex||cocycles){          /*Initialize the list of already used nodes*/
+    if(byvertex||cocycles){           /*Initialize the list of already used nodes*/
       if((usednodes=(int *)malloc(sizeof(int)))==NULL){
         Rprintf("Unable to allocate %d bytes for used node list in edgewiseCycleCensus.  Exiting.\n",sizeof(int));
         return;
@@ -270,25 +300,24 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
   int id_idx = 0;
   int ids[maxlen];
   ids[id_idx++] = src;
+  ids[id_idx++] = dest;
 
   /*Rprintf("\t\tBeginning recursion\n");*/
   for(i=0;i<n-2;i++) {               /*Recurse on each available vertex*/
     if(directed||(dest<availnodes[i])){
-      if(snaIsAdjacent(dest,availnodes[i],g,2))
+      if(snaIsAdjacent(dest,availnodes[i],g,2)){
         edgewisePathRecurseID(g,dest,src,availnodes[i],availnodes,n-2,usednodes,1,
                             count,cccount,NULL,maxlen,directed,byvertex,cocycles,0,ids,id_idx,cyclelist);
+      }
     }
     else{
-      if(snaIsAdjacent(availnodes[i],dest,g,2))
+      if(snaIsAdjacent(availnodes[i],dest,g,2)){
+
         edgewisePathRecurseID(g,dest,src,availnodes[i],availnodes,n-2,usednodes,1,
                             count,cccount,NULL,maxlen,directed,byvertex,cocycles,0,ids,id_idx,cyclelist);
+      }
     }
   }
-
-  printf("\n\nids:\n");
-  for (int i=0; i<maxlen; i++)
-    printf("%d, ", ids[i]+1);
-  printf("\n\n");
 
   /*Rprintf("\t\tReturned from recursion; freeing memory\n");*/
   if(availnodes!=NULL)
@@ -299,6 +328,11 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
 }
 
 
+
+//---------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 
 
 
@@ -334,7 +368,7 @@ void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, i
   CycleList *cyclelist = createCycleList();
 
   /*Walk the graph, adding edges and accumulating cycles*/
-  Rprintf("Building graph/accumulating cycles\n\tn=%d,%d\n",n,ng->n);
+  //Rprintf("Building graph/accumulating cycles\n\tn=%d,%d\n",n,ng->n);
   for(i=0;i<m;i++){
 
     if((!IISNA(g[i+2*m]))&&((*pdirected)||(g[i]<g[i+m]))){
@@ -344,14 +378,14 @@ void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, i
       // *********** NB **************
       // Node ID: g[i] Node ID: g[i+m]
       // *********** NB **************
-      Rprintf("ID:%d ID:%d\n",r+1,c+1);
+      //Rprintf("ID:%d ID:%d\n",r+1,c+1);
       // *********** NB **************
       // Node ID: g[i] Node ID: g[i+m]
       // *********** NB **************
 
 
       /*First, accumulate the cycles to be formed by the (r,c) edge*/
-      Rprintf("\tEdge at (%d,%d); counting cycles\n",r+1,c+1);
+      //Rprintf("\tEdge at (%d,%d); counting cycles\n",r+1,c+1);
       edgewiseCycleCensusID(ng,r,c,count,cccount,*pmaxlen,*pdirected,
         *pbyvertex,*pcocycles, cyclelist);
       //for(int k=0;k<*pmaxlen-1;k++){
@@ -381,7 +415,7 @@ void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, i
     }
   }
 
-  printCycleList(cyclelist);
+  //printCycleList(cyclelist);
 
   PutRNGstate();
 }
