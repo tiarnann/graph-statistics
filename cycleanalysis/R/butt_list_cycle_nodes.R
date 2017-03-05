@@ -8,7 +8,7 @@ kcycle.censusExtension<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=
     return(lapply(dat,kcycle.list,maxlen=maxlen,mode=mode, tabulate.by.vertex=tabulate.by.vertex,cycle.comembership=cycle.comembership))
   #End pre-processing
 
-  n<-attr(dat,"n")						# n = #nodes
+  n<-attr(dat,"n")						# n =  the number of nodes
   if(is.null(maxlen))
     maxlen<-n
   if(maxlen<2)
@@ -63,9 +63,8 @@ kcycle.censusExtension<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=
   #Return the result
   out<-list(cycle.count=count)
   out$cycle.ccenCount<-ccen$count
-  out$cycle.ccenCccount<-ccen$cccount
+  #out$cycle.ccenCccount<-ccen$cccount
   if(cocycles>0)
     out$cycle.comemb<-cccount
   out
 }
-

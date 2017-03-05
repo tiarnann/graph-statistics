@@ -40,7 +40,7 @@ CycleList *createCycleList(){
  * @param {Cycle} cycle 	[cycle to add to list]
  * @param {CycleList} list  [list to add cycle to]
  */
-void appendCycle (Cycle *cycle, CycleList *list){
+void appendCycle(Cycle *cycle, CycleList *list){
 	CycleListNode *result= createCycleListNode();
 	result -> list = cycle;
 
@@ -52,7 +52,7 @@ void appendCycle (Cycle *cycle, CycleList *list){
 	else {
 		list -> tail -> next = result;
 		list -> tail = result;
-	}	
+	}
 	list -> size += 1;
 }
 
@@ -84,9 +84,9 @@ void freeCycleList(CycleList *list)
 		next = current -> next;
 		freeCycle(current -> list);
 		free(current);
-		current = next; 
+		current = next;
 	}
 	free(list);
-} 
+}
 
 #endif

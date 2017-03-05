@@ -105,7 +105,7 @@ void freeCycle(Cycle *cycle) {
 	while(current != NULL){
 		next = current -> next;
 		free(current);
-		current = next; 
+		current = next;
 	}
 	free(cycle);
 }

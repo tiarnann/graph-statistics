@@ -23,9 +23,12 @@
 #include <stdlib.h>
 #include <R.h>
 #include "utils.h"
+#include "Cycle.h"
+#include "CycleList.h"
+#include "string.h"
 
 void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, int *pmaxlen, int *pdirected, int *pbyvertex, int *pcocycles);
-void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *cccount, int maxlen, int directed, int byvertex, int cocycles);
+void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *cccount, int maxlen, int directed, int byvertex, int cocycles, CycleList *cyclelist);
 
 #endif
 

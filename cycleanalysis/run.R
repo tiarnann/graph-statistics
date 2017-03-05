@@ -1,5 +1,3 @@
-
-
 #(1) change directory
 library('cycleanalysis')
 library('igraph')
@@ -13,6 +11,5 @@ net <- graph_from_data_frame(d=edges, vertices=nodes, directed=T)
 adjacencyMat <- get.adjacency(net, sparse=FALSE)
 #plot(net, edge.arrow.size=.4)
 
-cc<-kcycle.censusExtension(adjacencyMat, maxlen = 5, tabulate.by.vertex = FALSE, cycle.comembership = "bylength")
-
-
+# maxlen is the max cycle length to search for
+cc<-kcycle.censusExtension(adjacencyMat, maxlen = 12, tabulate.by.vertex = FALSE, cycle.comembership = "bylength")
