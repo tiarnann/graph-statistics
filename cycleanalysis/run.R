@@ -13,3 +13,10 @@ plot(net, edge.arrow.size=.4)
 
 # maxlen is the max cycle length to search for
 cc<-kcycle.censusExtension(adjacencyMat, maxlen = 10, tabulate.by.vertex = FALSE, cycle.comembership = "bylength")
+
+
+test <- function(){
+  .Call("cycleTestR",PACKAGE="cycleanalysis")
+}
+
+test()

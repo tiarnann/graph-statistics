@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <R.h>
+#include <Rinternals.h>
 #include "utils.h"
 #include "Cycle.h"
 #include "CycleList.h"
@@ -32,5 +33,9 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
 void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *availnodes, int availcount, int *usednodes, int curlen, double *count,
                            double *cpcount, double *dpcount, int maxlen, int directed, int byvertex, int copaths, int dyadpaths, char *ids[],
                            int id_idx, CycleList *cyclelist, char **id_names);
+
+
+SEXP cycleToVector(Cycle *cycle);
+SEXP cycleListToVector(Cycle *list);
 #endif
 

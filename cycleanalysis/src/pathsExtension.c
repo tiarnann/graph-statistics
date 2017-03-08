@@ -426,3 +426,38 @@ void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, i
   PutRNGstate();
 }
 
+SEXP cycleToVector(Cycle *cycle){
+  int cycleLength = cycle -> size;
+
+  SEXP result = PROTECT(allocVector(VECSXP, cycleLength));
+
+  Node * currentNode = cycle -> head;
+  while(currentNode != NULL){
+    //Do something special
+    currentNode = currentNode -> next;
+  }
+
+  return result;
+}
+
+SEXP cycleListToVector(Cycle *list){
+  int listLength = list -> size;
+
+  SEXP result = PROTECT(allocVector(VECSXP, listLength));
+
+  CycleListNode * currentNode = list -> head;
+  while(currentNode != NULL){
+    //Do something special with dat list
+    currentNode = currentNode -> next;
+  }
+
+  return result;
+}
+
+SEXP cycleTestR(){
+  Cycle *cycle = createCycle();
+  appendNode("123",cycle);
+  appendNode("123",cycle);
+
+  return cycleToVector(cycle);
+}
