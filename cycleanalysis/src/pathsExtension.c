@@ -431,33 +431,49 @@ SEXP cycleToVector(Cycle *cycle){
 
   SEXP result = PROTECT(allocVector(VECSXP, cycleLength));
 
+  int i = 0;
   Node * currentNode = cycle -> head;
   while(currentNode != NULL){
     //Do something special
+    SEXP id = PROTECT(mkString(currentNode->id));
+    SET_VECTOR_ELT(result, i++, id);
     currentNode = currentNode -> next;
   }
+  UNPROTECT(cycleLength + 1);
 
   return result;
 }
 
-SEXP cycleListToVector(Cycle *list){
+SEXP cycleListToVector(CycleList *list){
   int listLength = list -> size;
 
   SEXP result = PROTECT(allocVector(VECSXP, listLength));
 
+  int i = 0;
   CycleListNode * currentNode = list -> head;
   while(currentNode != NULL){
     //Do something special with dat list
+    SEXP cycle = cycleToVector(currentNode->list);
+    SET_VECTOR_ELT(result, i++, cycle);
     currentNode = currentNode -> next;
   }
+
+  UNPROTECT(1);
 
   return result;
 }
 
 SEXP cycleTestR(){
   Cycle *cycle = createCycle();
-  appendNode("123",cycle);
-  appendNode("123",cycle);
+  appendNode("c1",cycle);
+  appendNode("c2",cycle);
+  appendNode("c3",cycle);
+  appendNode("c4",cycle);
+  appendNode("c5",cycle);
 
-  return cycleToVector(cycle);
+  CycleList *list = createCycleList();
+  appendCycle(cycle,list);
+  appendCycle(cycle,list);
+
+  return cycleListToVector(list);
 }

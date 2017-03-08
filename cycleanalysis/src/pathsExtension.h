@@ -36,6 +36,6 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
 
 
 SEXP cycleToVector(Cycle *cycle);
-SEXP cycleListToVector(Cycle *list);
+SEXP cycleListToVector(CycleList *list);
 #endif
 
