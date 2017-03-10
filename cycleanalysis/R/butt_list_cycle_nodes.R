@@ -1,3 +1,18 @@
+
+edges.iterationTest <- function(edgeMat, count) {
+  weightsBackwards <- as.matrix(count,count)
+  for (i in 1:52) {
+    weightsBackwards[[i]] <- as.matrix(edgeMat[52+1-i,3], weightsBackwards)
+  }
+
+  #Output
+  weightsBackwards
+}
+
+#--------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------
+
+
 #kcycle.list 	- Compute the cycle census of a graph, possibly along with
 #additional information on the inidence of cycles.
 #				- Output list of each node in every cycle
@@ -5,6 +20,7 @@ kcycle.censusExtension<-function(dat, edgeMat, maxlen=3,mode="digraph",tabulate.
   #Pre-process the raw input
   dat<-as.edgelist.sna(dat)
   edgeMat <- edgeMat[, c("from", "to", "weight")]  # extracts the important data
+  testweights <- edges.iterationTest(edgeMat, 59)
 
   if(is.list(dat))
     return(lapply(dat,kcycle.list,maxlen=maxlen,mode=mode, tabulate.by.vertex=tabulate.by.vertex,cycle.comembership=cycle.comembership))
@@ -66,9 +82,15 @@ kcycle.censusExtension<-function(dat, edgeMat, maxlen=3,mode="digraph",tabulate.
   out$vnam <- c("Agg",vnam)
   out$cycle.ccenCount<-ccen$count
   out$edgeList <- edgeMat
+  out$testList <- testweights
 
   #out$cycle.ccenCccount<-ccen$cccount
   if(cocycles>0)
     out$cycle.comemb<-cccount
   out
 }
+
+
+
+
+
