@@ -1,9 +1,11 @@
 #kcycle.list 	- Compute the cycle census of a graph, possibly along with
 #additional information on the inidence of cycles.
 #				- Output list of each node in every cycle
-kcycle.censusExtension<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,cycle.comembership=c("none","sum","bylength")){
+kcycle.censusExtension<-function(dat, edgeMat, maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,cycle.comembership=c("none","sum","bylength")){
   #Pre-process the raw input
   dat<-as.edgelist.sna(dat)
+  edgeMat <- edgeMat[, c("from", "to", "weight")]  # extracts the important data
+
   if(is.list(dat))
     return(lapply(dat,kcycle.list,maxlen=maxlen,mode=mode, tabulate.by.vertex=tabulate.by.vertex,cycle.comembership=cycle.comembership))
   #End pre-processing
@@ -59,11 +61,12 @@ kcycle.censusExtension<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=
     dimnames(cccount)<-list(2:maxlen,vnam,vnam)
   }
 
-
   #Return the result
   out<-list(cycle.count=count)
   out$vnam <- c("Agg",vnam)
   out$cycle.ccenCount<-ccen$count
+  out$edgeList <- edgeMat
+
   #out$cycle.ccenCccount<-ccen$cccount
   if(cocycles>0)
     out$cycle.comemb<-cccount
