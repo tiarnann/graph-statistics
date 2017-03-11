@@ -28,12 +28,11 @@
 #include "CycleList.h"
 #include "string.h"
 
-void cycleCensusID_R(int *g, int *pn, int *pm, double *count, double *cccount, int *pmaxlen, int *pdirected, int *pbyvertex, int *pcocycles, char **id_names);
-void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *cccount, int maxlen, int directed, int byvertex, int cocycles, CycleList *cyclelist, char **id_names);
+SEXP cycleCensusID_R(SEXP g_SEXP, SEXP pn_SEXP, SEXP pm_SEXP, SEXP count_SEXP,  SEXP cccount_SEXP,  SEXP pmaxlen_SEXP, SEXP pdirected_SEXP, SEXP pbyvertex_SEXP, SEXP pcocycles_SEXP, SEXP id_names_SEXP);
+void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *cccount, int maxlen, int directed, int byvertex, int cocycles, CycleList *cyclelist, SEXP id_names);
 void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *availnodes, int availcount, int *usednodes, int curlen, double *count,
                            double *cpcount, double *dpcount, int maxlen, int directed, int byvertex, int copaths, int dyadpaths, char *ids[],
-                           int id_idx, CycleList *cyclelist, char **id_names);
-
+                           int id_idx, CycleList *cyclelist, SEXP id_names);
 
 SEXP cycleToVector(Cycle *cycle);
 SEXP cycleListToVector(CycleList *list);
