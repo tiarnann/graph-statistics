@@ -1,3 +1,44 @@
+
+edges.iterationTest <- function(edgeMat, count) {
+  weightsBackwards <- as.matrix(count,count)
+  for (i in 1:52) {
+    weightsBackwards[[i]] <- as.matrix(edgeMat[52+1-i, 3], weightsBackwards)
+  }
+
+  #Output
+  weightsBackwards
+}
+
+cycle.edgeWeightTotal <- function(cyclelists, edgeMat, count) {
+  edgeWeightTotals <- as.matrix(count,count)
+  for (i in 1:count) {
+    totalWeight <- 0
+    for (j in 1:( length( cyclelists[[i]] ) -1)  ) {
+      node1 <- cyclelists[[i]][j]
+      node2 <- cyclelists[[i]][j+1]
+
+      #find node pair in edgelist
+      foundBoth  <- FALSE
+      idx <- 1
+      while (!foundBoth) {
+        if (node1 == edgeMat[idx, 1] && node2 == edgeMat[idx, 2]) {
+          totalWeight <- totalWeight + edgeMat[idx, 3]
+          foundBoth == TRUE
+        }
+        else idx <- idx +1
+      }
+
+    }
+  }
+
+  #Output
+  edgeWeightTotals
+}
+
+#------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------
+
 #kcycle.list 	- Compute the cycle census of a graph, possibly along with
 #additional information on the inidence of cycles.
 #				- Output list of each node in every cycle
@@ -41,7 +82,12 @@ kcycle.censusExtension<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=
 
   #Calculate the cycle information
   ccen <- .Call("cycleCensusID_R", dat, n, NROW(dat), count, cccount, maxlen, directed, tabulate.by.vertex,cocycles, c(vnam),PACKAGE = "cycleanalysis")
-  return (ccen)
+
+  #Return the result
+  out<-list(cyclecounts=count)
+  out$cycles <- ccen
+  return (out)
+
   # # Coerce the cycle counts into the right form
   # if(!tabulate.by.vertex){
   #   count<-ccen$count
