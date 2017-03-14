@@ -12,8 +12,6 @@ edgeMat <- as.matrix(edges, sparse=FALSE)
 plot(net, edge.arrow.size=.4)
 
 # maxlen is the max cycle length to search for
-cc <- kcycle.censusExtension(adjacencyMat, maxlen = 10, tabulate.by.vertex = FALSE, cycle.comembership = "bylength")
+cc <- kcycle.censusExtension(adjacencyMat, edges, maxlen = 10, tabulate.by.vertex = FALSE, cycle.comembership = "bylength")
 s <- paste(c("List length ", as.character(length(cc)),"\nHow bou dat"), sep=" ")
-edgeWeightTotal <- cycle.edgeWeightTotal(cc, edgeMat, length(cc))
-minimumEdgeWeight <- cycle.minimumEdgeWeight(cc, edgeMat, length(cc))
 message(s)

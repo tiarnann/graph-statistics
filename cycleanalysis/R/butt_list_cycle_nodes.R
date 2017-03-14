@@ -1,88 +1,78 @@
-edges.iterationTest <- function(edgeMat, count) {
-  weightsBackwards <- as.matrix(count,count)
-  for (i in 1:52) {
-    weightsBackwards[[i]] <- as.matrix(edgeMat[52+1-i, 3], weightsBackwards)
-  }
 
-  #Output
-  weightsBackwards
-}
-
-cycle.edgeWeightTotal <- function(cyclelists, edgeMat, count) {
-  edgeWeightTotals <- as.matrix(count,count)
+cycle.edgeWeightTotal <- function(cycles, edgeMat, count) {
+  edgeWeightTotals <- as.matrix(count)
   for (i in 1:count) {
     totalWeight <- 0
-    for (j in 1:( length( cyclelists[[i]] ))  ) {
-      if (j == length( cyclelists[[i]] )) {
-        node1 <- cyclelists[[i]][j]
-        node2 <- cyclelists[[i]][1]
+    for (j in 1:( length( cycles[[i]] ))  ) {
+      #safe checking for the last pair of nodes
+      if (j == length( cycles[[i]] )) {
+        node1 <- cycles[[i]][j]
+        node2 <- cycles[[i]][1]
       }
       else{
-        node1 <- cyclelists[[i]][j]
-        node2 <- cyclelists[[i]][j+1]
+        node1 <- cycles[[i]][j]
+        node2 <- cycles[[i]][j+1]
       }
 
       #find node pair in edgelist
       foundBoth  <- FALSE
       idx <- 1
-      while (!foundBoth) {
+      while (!foundBoth && idx<=nrow(edgeMat)) {
         if (node1 == edgeMat[idx, 1] && node2 == edgeMat[idx, 2]) {
-          totalWeight <- totalWeight + edgeMat[idx, 3]
-          foundBoth == TRUE
+          totalWeight <- totalWeight +  as.double(edgeMat[idx, 3])
+          foundBoth <- TRUE
         }
         else {
           idx <- idx + 1
         }
       }
-
     }
     edgeWeightTotals[i] <- totalWeight
   }
-
   #Output
   edgeWeightTotals
 }
 
-cycle.minimumEdgeWeight <- function(cyclelists, edgeMat, count) {
-  minimumEdgeWeights <- as.matrix(count,count)
+
+cycle.minimumEdgeWeight <- function(cycles, edgeMat, count) {
+  minimumEdgeWeights <- as.matrix(count)
   for (i in 1:count) {
     minWeight <- 0
-    for (j in 1:( length( cyclelists[[i]] ))  ) {
-      if (j == length( cyclelists[[i]] )) {
-        node1 <- cyclelists[[i]][j]
-        node2 <- cyclelists[[i]][1]
+    for (j in 1:( length( cycles[[i]] ))  ) {
+      #safe checking for the last pair of nodes
+      if (j == length( cycles[[i]] )) {
+        node1 <- cycles[[i]][j]
+        node2 <- cycles[[i]][1]
       }
       else{
-        node1 <- cyclelists[[i]][j]
-        node2 <- cyclelists[[i]][j+1]
+        node1 <- cycles[[i]][j]
+        node2 <- cycles[[i]][j+1]
       }
 
       #find node pair in edgelist
       foundBoth  <- FALSE
       idx <- 1
-      while (!foundBoth) {
+      while (!foundBoth && idx<=nrow(edgeMat)) {
         if (node1 == edgeMat[idx, 1] && node2 == edgeMat[idx, 2]) {
+          thisWeight <- as.double(edgeMat[idx, 3])
           if (minWeight == 0){
-            minWeight <- edgeMat[idx, 3]
+            minWeight <- thisWeight
           }
-          else if (minWeight !=0 && edgeMat[idx, 3] < minWeight) {
-            minWeight <- edgeMat[idx, 3]
+          else if (minWeight !=0 && thisWeight < minWeight) {
+            minWeight <- thisWeight
           }
-          foundBoth == TRUE
+          foundBoth <- TRUE
         }
-        else  {
+        else {
           idx <- idx + 1
         }
       }
-
     }
     minimumEdgeWeights[i] <- minWeight
   }
-
   #Output
   minimumEdgeWeights
 }
-
 
 #------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------
@@ -92,7 +82,7 @@ cycle.minimumEdgeWeight <- function(cyclelists, edgeMat, count) {
 #additional information on the inidence of cycles.
 #				- Output list of each node in every cycle
 
-kcycle.censusExtension<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,cycle.comembership=c("none","sum","bylength")){
+kcycle.censusExtension<-function(dat, edges, maxlen=3,mode="digraph",tabulate.by.vertex=TRUE,cycle.comembership=c("none","sum","bylength")){
   #Pre-process the raw input
   dat<-as.edgelist.sna(dat)
   if(is.list(dat))
@@ -132,11 +122,16 @@ kcycle.censusExtension<-function(dat,maxlen=3,mode="digraph",tabulate.by.vertex=
   #Calculate the cycle information
   ccen <- .Call("cycleCensusID_R", dat, n, NROW(dat), count, cccount, maxlen, directed, tabulate.by.vertex,cocycles, c(vnam),PACKAGE = "cycleanalysis")
 
-
+  #Calculate edge weight information
+  edgeMat <- as.matrix(edges, sparse=FALSE)
+  edgeWeightTotal <- cycle.edgeWeightTotal(ccen, edgeMat, length(ccen))
+  minimumEdgeWeight <- cycle.minimumEdgeWeight(ccen, edgeMat, length(ccen))
 
   #Return the result
   out<-list(cyclecounts=count)
   out$cycles <- ccen
+  out$edgeWeightTotal <- edgeWeightTotal
+  out$minimumEdgeWeight <- minimumEdgeWeight
   return (out)
 
   # # Coerce the cycle counts into the right form
