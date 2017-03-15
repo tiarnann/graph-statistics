@@ -1,3 +1,42 @@
+cycle.mostImportantNodes <- function(cycles, count) {
+  mostImportantNodes <- as.matrix(count)
+
+  theList <- list()   #indexes are the nodes, values are the amount of times they reoccur
+
+  for(z in 1: 17){  #fill this list with 0 values
+    theList[z] = 0;
+  }
+  for( i in 1:count){
+    for(j in 1: length( cycles[[i]])){
+      #print(cycles[[i]][[j]])
+      formatting <- unlist(strsplit(cycles[[i]][[j]], 's', fixed=TRUE))     #convert character values into ints
+      theNumber <- as.numeric(formatting[[2]])
+      #print(theNumber)
+      #print(theList)
+      theList[[theNumber]] = theList[[theNumber]] + 1                              #find the index of the character and increment
+    }
+
+  }
+  #print(theList)
+  big <- which.max(theList)                                                #taking the highest three indexes and deleting them from the list
+  theList[which.max(theList)] <- 0
+
+  secondBig <- which.max(theList)
+  theList[which.max(theList)] <- 0
+
+  thirdBig <- which.max(theList)
+  theList[which.max(theList)] <- 0
+
+  mostImportantNodes[1] <- big
+  mostImportantNodes[2] <-secondBig
+  mostImportantNodes[3] <- thirdBig
+  #output
+  mostImportantNodes
+}
+
+
+
+
 
 cycle.edgeWeightTotal <- function(cycles, edgeMat, count) {
   edgeWeightTotals <- as.matrix(count)
@@ -126,12 +165,13 @@ kcycle.censusExtension<-function(dat, edges, maxlen=3,mode="digraph",tabulate.by
   edgeMat <- as.matrix(edges, sparse=FALSE)
   edgeWeightTotal <- cycle.edgeWeightTotal(ccen, edgeMat, length(ccen))
   minimumEdgeWeight <- cycle.minimumEdgeWeight(ccen, edgeMat, length(ccen))
-
+  mostImportantNodes <- cycle.mostImportantNodes(ccen, length(ccen))           #AAAAAAAAAA
   #Return the result
   out<-list(cyclecounts=count)
   out$cycles <- ccen
   out$edgeWeightTotal <- edgeWeightTotal
   out$minimumEdgeWeight <- minimumEdgeWeight
+  out$mostImportantNodes <-mostImportantNodes                                 #AAAAAAAAAA
   return (out)
 
   # # Coerce the cycle counts into the right form
