@@ -14,7 +14,7 @@ cycle.edgeWeightTotal <- function(cycles, edgeMat, count) {
         node2 <- cycles[[i]][j+1]
       }
 
-      #find node pair in edgelist
+      #find node pair in edgelist and get weight
       foundBoth  <- FALSE
       idx <- 1
       while (!foundBoth && idx<=nrow(edgeMat)) {
@@ -49,13 +49,13 @@ cycle.minimumEdgeWeight <- function(cycles, edgeMat, count) {
         node2 <- cycles[[i]][j+1]
       }
 
-      #find node pair in edgelist
+      #find node pair in edgelist & get weight
       foundBoth  <- FALSE
       idx <- 1
       while (!foundBoth && idx<=nrow(edgeMat)) {
         if (node1 == edgeMat[idx, 1] && node2 == edgeMat[idx, 2]) {
           thisWeight <- as.double(edgeMat[idx, 3])
-          if (minWeight == 0){
+          if (j == 1){
             minWeight <- thisWeight
           }
           else if (minWeight !=0 && thisWeight < minWeight) {
