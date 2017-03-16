@@ -1,9 +1,8 @@
 cycle.mostImportantNodes <- function(cycles, count) {
   mostImportantNodes <- as.matrix(count)
-
   theList <- list()   #indexes are the nodes, values are the amount of times they reoccur
 
-  for(z in 1: 17){  #fill this list with 0 values
+  for(z in 1: length(adjacencyMat[1, ])){  #fill this list with 0 values
     theList[z] = 0;
   }
   for( i in 1:count){
