@@ -49,11 +49,11 @@ public class DataCreator {
 	
 	
 	// WARNING! This overwrites any files of the same name that already exist in this directory.
-	private static void toCSVFiles(String nodes[], String edges[][]) {
+	private static void toCSVFiles(String nodes[], String edges[][], String filename_extension) {
 		//nodes
 		try {
 			BufferedWriter br;
-			br = new BufferedWriter(new FileWriter("Dataset_nodes.csv"));
+			br = new BufferedWriter(new FileWriter("Dataset_nodes_"+filename_extension+".csv"));
 			StringBuilder sb = new StringBuilder();
 			
 			sb.append("id");
@@ -74,7 +74,7 @@ public class DataCreator {
 		//edges
 		try {
 			BufferedWriter br;
-			br = new BufferedWriter(new FileWriter("Dataset_edges.csv"));
+			br = new BufferedWriter(new FileWriter("Dataset_edges_"+filename_extension+".csv"));
 			StringBuilder sb = new StringBuilder();
 			
 			sb.append("from,to,weight,type\n");
@@ -104,10 +104,10 @@ public class DataCreator {
 		int n_edges = getNumber(input, "How many edges do you want?");
 		int min_weight = getNumber(input, "What min weight do you want the edges to have?");
 		int max_weight = getNumber(input, "What max weight do you want the edges to have?");
-		
 		String edges[][] = createEdges(n_edges, min_weight, max_weight, nodes);
 		
-		toCSVFiles(nodes, edges);
+		String filename_extension = n_nodes + ":" + n_edges;
+		toCSVFiles(nodes, edges, filename_extension);
 		
 	}
 	
