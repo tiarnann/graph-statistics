@@ -3,8 +3,8 @@ library('cycleanalysis')
 library('igraph')
 library('statnet')
 
-nodes <- read.csv("sample_data/Dataset_nodes.csv", header=T, as.is=T)
-edges <- read.csv("sample_data/Dataset_edges.csv", header=T, as.is=T)
+nodes <- read.csv("sample_data/Dataset1-Media-Example-NODES.csv", header=T, as.is=T)
+edges <- read.csv("sample_data/Dataset1-Media-Example-EDGES.csv", header=T, as.is=T)
 
 #nodes <- read.csv("sample_data/Dataset1-Media-Example-NODES.csv", header=T, as.is=T)
 #edges <- read.csv("sample_data/Dataset1-Media-Example-EDGES.csv", header=T, as.is=T)

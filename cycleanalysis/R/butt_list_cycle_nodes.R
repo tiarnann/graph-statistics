@@ -38,6 +38,20 @@ cycle.mostImportantNodes <- function(cycles, count) {
 
 
 cycle.edgeWeightTotal <- function(cycles, edgeMat, count) {
+  # Retrieve index associated with column names
+  columnNames <- as.matrix(colnames(edgeMat))
+  for (k in 1:length(columnNames)){
+    if (columnNames[k] == "from"){
+      fromIdx <- k
+    }
+    else if (columnNames[k] == "to"){
+      toIdx <- k
+    }
+    else if (columnNames[k] == "weight"){
+      weightIdx <- k
+    }
+  }
+
   edgeWeightTotals <- as.matrix(count)
   for (i in 1:count) {
     totalWeight <- 0
@@ -56,8 +70,8 @@ cycle.edgeWeightTotal <- function(cycles, edgeMat, count) {
       foundBoth  <- FALSE
       idx <- 1
       while (!foundBoth && idx<=nrow(edgeMat)) {
-        if (node1 == edgeMat[idx, 1] && node2 == edgeMat[idx, 2]) {
-          totalWeight <- totalWeight +  as.double(edgeMat[idx, 3])
+        if (node1 == edgeMat[idx, fromIdx] && node2 == edgeMat[idx, toIdx]) {
+          totalWeight <- totalWeight +  as.double(edgeMat[idx, weightIdx])
           foundBoth <- TRUE
         }
         else {
@@ -73,6 +87,20 @@ cycle.edgeWeightTotal <- function(cycles, edgeMat, count) {
 
 
 cycle.minimumEdgeWeight <- function(cycles, edgeMat, count) {
+  # Retrieve index associated with column names
+  columnNames <- as.matrix(colnames(edgeMat))
+  for (k in 1:length(columnNames)){
+    if (columnNames[k] == "from"){
+      fromIdx <- k
+    }
+    else if (columnNames[k] == "to"){
+      toIdx <- k
+    }
+    else if (columnNames[k] == "weight"){
+      weightIdx <- k
+    }
+  }
+
   minimumEdgeWeights <- as.matrix(count)
   for (i in 1:count) {
     minWeight <- 0
@@ -91,8 +119,8 @@ cycle.minimumEdgeWeight <- function(cycles, edgeMat, count) {
       foundBoth  <- FALSE
       idx <- 1
       while (!foundBoth && idx<=nrow(edgeMat)) {
-        if (node1 == edgeMat[idx, 1] && node2 == edgeMat[idx, 2]) {
-          thisWeight <- as.double(edgeMat[idx, 3])
+        if (node1 == edgeMat[idx, fromIdx] && node2 == edgeMat[idx, toIdx]) {
+          thisWeight <- as.double(edgeMat[idx, weightIdx])
           if (j == 1){
             minWeight <- thisWeight
           }
