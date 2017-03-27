@@ -77,7 +77,7 @@ public class DataCreator {
 			br = new BufferedWriter(new FileWriter("Dataset_edges.csv"));
 			StringBuilder sb = new StringBuilder();
 			
-			//sb.append("from,to,weight\n");
+			sb.append("from,to,weight,type\n");
 			
 			for (int i=0; i<edges[0].length; i++) {
 				for (int j=0; j<edges.length; j++) {
@@ -97,12 +97,14 @@ public class DataCreator {
 	
 	public static void main(String args0[]) {
 		Scanner input = new Scanner(System.in);
+		
 		int n_nodes = getNumber(input, "How many nodes do you want?");
+		String nodes[] = createNodes(n_nodes);
+		
 		int n_edges = getNumber(input, "How many edges do you want?");
 		int min_weight = getNumber(input, "What min weight do you want the edges to have?");
 		int max_weight = getNumber(input, "What max weight do you want the edges to have?");
 		
-		String nodes[] = createNodes(n_nodes);
 		String edges[][] = createEdges(n_edges, min_weight, max_weight, nodes);
 		
 		toCSVFiles(nodes, edges);
