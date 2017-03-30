@@ -3,36 +3,39 @@
 # Parameters: cycles = list of cycles
 #             count = number of cycles
 # Returns:    mostImportantNodes = list of the 3 most important nodes
-cycle.mostImportantNodes <- function(cycles, count) {
+cycle.mostImportantNodes <- function(cycles, count, vnam) {
   # create a list of counts with a value for each node
-  theList <- list()   # indexes are the nodes, values are the amount of times they reoccur in the given cycles
-
-  for(z in 1: length(adjacencyMat[1, ])){  # initialise list to 0
-    theList[z] = 0;
+  # matrix of lists, first term is the name of the index, second is the frequency
+  mat<-matrix(list(), nrow=length(vnam), ncol=2)
+  for(z in 1: length(vnam)){  #fill in names, and initialise counts to 0
+    mat[z,1] <- vnam[z]
+    mat[z,2] <- 0
   }
   for (i in 1:count){
     for (j in 1:length(cycles[[i]]) ){
-      formatting <- unlist(strsplit(cycles[[i]][[j]], 's', fixed=TRUE)) # convert character values into ints
-      theNumber <- as.numeric(formatting[[2]])
-      theList[[theNumber]] = theList[[theNumber]] + 1                   # find the index of the character and increment
+      for(k in 1:length(vnam)){
+        if(cycles[[i]][[j]]==mat[k,1]){
+          mat[[k,2]] <- mat[[k,2]] + 1
+        }
+      }
     }
   }
-
-  # find the highest three values and delete them from the list
-  big <- which.max(theList)
-  theList[which.max(theList)] <- 0
-
-  secondBig <- which.max(theList)
-  theList[which.max(theList)] <- 0
-
-  thirdBig <- which.max(theList)
-  theList[which.max(theList)] <- 0
-
+  #list to return
   mostImportantNodes <- as.matrix(3)
-  mostImportantNodes[1] <- big
-  mostImportantNodes[2] <- secondBig
-  mostImportantNodes[3] <- thirdBig
 
+  # find the highest three values, add them to the mostImportantNodes
+  for(i in 1:3){
+    big <- 0        #frequency
+    index1 <- 0     #index of value
+    for(j in 1:length(vnam)){   #find value
+      if(mat[[j,2]] >= big){
+        big<-mat[[j,2]]
+        index1 <- j
+      }
+      mostImportantNodes[i] <- mat[[index1, 1]] #add to the list
+      mat[index1,2] <- 0          #remove it so as not to find the same value twice
+    }
+  }
   # output
   mostImportantNodes
 }
@@ -180,7 +183,6 @@ kcycle.censusExtension<-function(dat, edges, maxlen=3,mode="digraph",tabulate.by
     directed<-FALSE
   cocycles<-switch(match.arg(cycle.comembership), "none"=0, "sum"=1, "bylength"=2)
 
-  print(vnam)
 
   # generate the data structures for the counts
   if(!tabulate.by.vertex)
@@ -203,7 +205,7 @@ kcycle.censusExtension<-function(dat, edges, maxlen=3,mode="digraph",tabulate.by
   edgeMat <- as.matrix(edges, sparse=FALSE)
   edgeWeightTotal <- cycle.edgeWeightTotal(ccen, edgeMat, length(ccen))
   minimumEdgeWeight <- cycle.minimumEdgeWeight(ccen, edgeMat, length(ccen))
-  mostImportantNodes <- cycle.mostImportantNodes(ccen, length(ccen))
+  mostImportantNodes <- cycle.mostImportantNodes(ccen, length(ccen), vnam)
 
   # output
   out<-list(cyclecounts=count)
