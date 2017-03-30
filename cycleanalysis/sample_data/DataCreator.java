@@ -106,7 +106,7 @@ public class DataCreator {
 		int max_weight = getNumber(input, "What max weight do you want the edges to have?");
 		String edges[][] = createEdges(n_edges, min_weight, max_weight, nodes);
 		
-		String filename_extension = n_nodes + ":" + n_edges;
+		String filename_extension = n_nodes + "_" + n_edges;
 		toCSVFiles(nodes, edges, filename_extension);
 		
 	}
