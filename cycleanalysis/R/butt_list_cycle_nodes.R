@@ -34,25 +34,23 @@ cycle.mostImportantNodes <- function(cycles, count) {
 }
 
 
-
-
-
+# Calculates the total edge weight of each cycle
+# Parameters: cycles = list of cycles
+#             edgeMat = matrix of edges and associated weights with column names "from", "to" and "weight"
+#             count = number of cycles
+# Returns:    edgeWeightTotal = list of total edge weight for each cycle
 cycle.edgeWeightTotal <- function(cycles, edgeMat, count) {
-  # Retrieve index associated with column names
+  # Retrieve indices associated with column names
   columnNames <- as.matrix(colnames(edgeMat))
   for (k in 1:length(columnNames)){
-    if (columnNames[k] == "from"){
-      fromIdx <- k
-    }
-    else if (columnNames[k] == "to"){
-      toIdx <- k
-    }
-    else if (columnNames[k] == "weight"){
-      weightIdx <- k
-    }
+    if (columnNames[k] == "from"){        fromIdx <- k   }
+    else if (columnNames[k] == "to"){     toIdx <- k     }
+    else if (columnNames[k] == "weight"){ weightIdx <- k }
   }
 
+  # Initialize and fill list of total edge weights
   edgeWeightTotals <- as.matrix(count)
+  # For every cycle
   for (i in 1:count) {
     totalWeight <- 0
     for (j in 1:( length( cycles[[i]] ))  ) {
@@ -85,7 +83,11 @@ cycle.edgeWeightTotal <- function(cycles, edgeMat, count) {
   edgeWeightTotals
 }
 
-
+# Calculates the minimum edge weight in each cycle
+# Parameters: cycles = list of cycles
+#             edgeMat = matrix of edges and associated weights with column names "from", "to" and "weight"
+#             count = number of cycles
+# Returns:    minimumEdgeWeight = list of the minimum edge weight for every cycle
 cycle.minimumEdgeWeight <- function(cycles, edgeMat, count) {
   # Retrieve index associated with column names
   columnNames <- as.matrix(colnames(edgeMat))
