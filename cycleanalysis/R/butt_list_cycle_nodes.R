@@ -20,6 +20,7 @@ cycle.mostImportantNodes <- function(cycles, count, vnam) {
       }
     }
   }
+
   #list to return
   mostImportantNodes <- as.matrix(3)
 
@@ -36,6 +37,7 @@ cycle.mostImportantNodes <- function(cycles, count, vnam) {
       mat[index1,2] <- 0          #remove it so as not to find the same value twice
     }
   }
+
   # output
   mostImportantNodes
 }
@@ -123,7 +125,7 @@ cycle.minimumEdgeWeight <- function(cycles, edgeMat, count) {
       while (!foundBoth && idx<=nrow(edgeMat)) {
         if (node1 == edgeMat[idx, fromIdx] && node2 == edgeMat[idx, toIdx]) {
           thisWeight <- as.double(edgeMat[idx, weightIdx])
-          if (j == 1){
+          if (j == 1) {
             minWeight <- thisWeight
           }
           else if (minWeight !=0 && thisWeight < minWeight) {
@@ -141,10 +143,6 @@ cycle.minimumEdgeWeight <- function(cycles, edgeMat, count) {
   # output
   minimumEdgeWeights
 }
-
-#------------------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------------------
 
 # kcycle.censusExtension - Compute the cycle census of a graph, along with additional cycle information
 #  on the inidence of cycles.
