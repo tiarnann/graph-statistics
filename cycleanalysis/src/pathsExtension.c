@@ -10,27 +10,31 @@
 #include "CycleList.h"
 #include "string.h"
 
+/** Given t pointer to a CycleList object and list of IDs in a cycle, addListToCycleList appends the cycle to the CycleList object.
+ *  @param  ids {char **}             [list of IDs in a cycle]
+ *  @param  length {int}              [length of ids]
+ *  @param  cyclelist {CycleList *}   [list of previously found cycles]
+ */
 void addListToCycleList(char **ids, int length, CycleList *cyclelist) {
-  //Create cycle
+  /*Create Cycle object*/
   Cycle *cycle = createCycle();
   for (int i=0; i<=length; i++)
     appendNode(ids[i], cycle);
 
-  //Append cycle to cyclelist
+  /*Append cycle to cyclelist*/
   appendCycle(cycle, cyclelist);
 }
 
-/*Recursively count the paths from src to dest.  (This is an adaptation of the routine I wrote for statnet.)  count should be vector of path
- counts (starting with length 1) if !byvertex, or else a matrix of dimension (maxlen-1)x(n+1) whose first column contains aggregate counts and
- i+1th column contains counts for vertex i.  If copaths==1, cpcount should contain an nxn matrix containing path co-membership counts.  If
- copaths=2, cpcount should contain a (maxlen-1)xnxn array containing path co-membership counts at each length.  This is ignored if copaths==0.
- (Odd note: if this is being used to construct a path census, rather than a cycle census, maxlen should be one greater than the true maximum
- length.  It looks wrong, but it isn't.  All of the maxlen-1 stuff in here is also correct, even though (e.g., for dyad paths) it may appear
- otherwise.)*/
+/** Recursively count the paths from src to dest. (This is an adaptation of the routine written for statnet.) count should be vector of path counts
+ *  (starting with length 1) if !byvertex, or else a matrix of dimension (maxlen-1)x(n+1) whose first column contains aggregate counts and i+1th
+ *  column contains counts for vertex i.  If copaths==1, cpcount should contain an nxn matrix containing path co-membership counts. If copaths=2,
+ *  cpcount should contain a (maxlen-1)xnxn array containing path co-membership counts at each length.  This is ignored if copaths==0. (Odd note:
+ *  if this is being used to construct a path census, rather than a cycle census, maxlen should be one greater than the true maximum length. It
+ *  looks wrong, but it isn't.  All of the maxlen-1 stuff in here is also correct, even though (e.g., for dyad paths) it may appear otherwise.)
+ */
 void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *availnodes, int availcount, int *usednodes, int curlen, double *count,
                            double *cpcount, double *dpcount, int maxlen, int directed, int byvertex, int copaths, int dyadpaths, char *ids[],
                            int id_idx, CycleList *cyclelist, SEXP id_names)
-
 {
   int *newavail,i,j,k,newavailcount,*newused,n;
 
@@ -42,7 +46,7 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
   if(directed||(curnode<dest)){
     if(snaIsAdjacent(curnode,dest,g,2)){
       count[curlen]++;                                /*Basic update*/
-      addListToCycleList(ids, curlen+1, cyclelist);
+      addListToCycleList(ids, curlen+1, cyclelist);   /*Add the cycle found to cyclelist*/
 
       if(byvertex){                                   /*Update path incidence counts*/
         for(j=0;j<curlen;j++) {
@@ -101,7 +105,7 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
     if(snaIsAdjacent(dest,curnode,g,2)){
       count[curlen]++;                                /*Basic update*/
 
-      addListToCycleList(ids, curlen+1, cyclelist);   /*Add this cycle found to Cyclelist stuct*/
+      addListToCycleList(ids, curlen+1, cyclelist);   /*Add the cycle found to cyclelist*/
 
       if(byvertex){                                   /*Update path incidence counts*/
         for(j=0;j<curlen;j++)
@@ -165,7 +169,7 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
         return;
       }
       j=0;
-      for(i=0;i<availcount;i++)                       /*Create the reduced list, fur passin'*/
+      for(i=0;i<availcount;i++)                       /*Create the reduced list, for passing*/
         if(availnodes[i]!=curnode)
           newavail[j++]=availnodes[i];
     }
@@ -212,21 +216,16 @@ void edgewisePathRecurseID(snaNet *g, int src, int dest, int curnode, int *avail
   /*Free the used node list*/
   /*if(usednodes!=NULL)
    free((void *)usednodes);*/
-  /*Check for interrupts (if recursion is taking way too long...)*/
+
+  /*Check for interrupts (if recursion is taking far too long)*/
   R_CheckUserInterrupt();
 }
 
-
-
-//---------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------
-
-
-
+/** Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should
+ *  be broken down by participating vertex, and whether a cycle co-membership matrix should be returned (respectively).  In either case, count and cccount must be structured
+ *  per count and pccount in edgewisePathRecurseID.
+ */
 void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *cccount, int maxlen, int directed, int byvertex, int cocycles, CycleList *cyclelist, SEXP id_names)
-  /*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether cycle counts should be broken down by participating vertex, and whether a cycle co-membership matrix should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurseID.*/
 {
   int n,i,j,*availnodes,*usednodes;
 
@@ -238,10 +237,8 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
   if(directed&&snaIsAdjacent(dest,src,g,2)){
     count[0]++;
 
-    /*Add new Cycle to CycleList*/
+    /*Add new Cycle to cyclelist*/
     Cycle *cycle = createCycle();
-
-
     appendNode((char *) CHAR(STRING_ELT(id_names, src)), cycle);
     appendNode((char *) CHAR(STRING_ELT(id_names, dest)), cycle);
     appendCycle(cycle, cyclelist);
@@ -275,7 +272,7 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
   for(i=0;i<n;i++) {
     if((i!=src)&&(i!=dest))
       availnodes[j++]=i;
-    if(byvertex||cocycles){                           /*Initialize the list of already used nodes*/
+    if(byvertex||cocycles){                           /*Initialize the list of nodes already used */
       if((usednodes=(int *) malloc(sizeof(int)))==NULL){
         Rprintf("Unable to allocate %d bytes for used node list in edgewiseCycleCensus.  Exiting.\n",sizeof(int));
         return;
@@ -284,7 +281,7 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
     }
   }
 
-  //Create list of ID's
+  /*Create list of IDs*/
   int id_idx = 0;
   char *ids[maxlen];
 
@@ -315,11 +312,14 @@ void edgewiseCycleCensusID(snaNet *g, int src, int dest, double *count, double *
 
 }
 
-/*Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether
- cycle counts should be broken down by participating vertex, and whether cycle co-membership counts should be returned (respectively).  In either case, count and cccount must be structured per count and pccount in edgewisePathRecurseID.*/
+/** Count the number of cycles associated with the (src,dest) edge in g, assuming that this edge exists.  The byvertex and cocycles flags indicate whether
+ *  cycle counts should be broken down by participating vertex, and whether cycle co-membership counts should be returned (respectively).  In either case,
+ *  count and cccount must be structured per count and pccount in edgewisePathRecurseID.
+ */
 
-SEXP cycleCensusID_R(SEXP g_SEXP, SEXP pn_SEXP, SEXP pm_SEXP, SEXP count_SEXP,  SEXP cccount_SEXP,  SEXP pmaxlen_SEXP, SEXP pdirected_SEXP, SEXP pbyvertex_SEXP, SEXP pcocycles_SEXP, SEXP id_names_SEXP) {
-
+SEXP cycleCensusID_R(SEXP g_SEXP, SEXP pn_SEXP, SEXP pm_SEXP, SEXP count_SEXP,  SEXP cccount_SEXP,  SEXP pmaxlen_SEXP, SEXP pdirected_SEXP, SEXP pbyvertex_SEXP, SEXP pcocycles_SEXP, SEXP id_names_SEXP)
+{
+  /*Type conversions after using .Call()*/
   PROTECT(g_SEXP = AS_INTEGER(g_SEXP));
   int *g = INTEGER_POINTER(AS_INTEGER(g_SEXP));
 
@@ -359,6 +359,7 @@ SEXP cycleCensusID_R(SEXP g_SEXP, SEXP pn_SEXP, SEXP pm_SEXP, SEXP count_SEXP,  
   ng->iel=(slelement **)R_alloc(n,sizeof(slelement *));
   ng->oel=(slelement **)R_alloc(n,sizeof(slelement *));
   id=0;
+
   /*Initialize the graph*/
   for(i=0;i<n;i++){
     ng->indeg[i]=0;
@@ -385,7 +386,6 @@ SEXP cycleCensusID_R(SEXP g_SEXP, SEXP pn_SEXP, SEXP pm_SEXP, SEXP count_SEXP,  
       // Node ID: g[i] Node ID: g[i+m]
       // *********** NB **************
 
-
       /*First, accumulate the cycles to be formed by the (r,c) edge*/
       edgewiseCycleCensusID(ng,r,c,count,cccount,*pmaxlen,*pdirected,
         *pbyvertex,*pcocycles, cyclelist, id_names_SEXP);
@@ -399,6 +399,7 @@ SEXP cycleCensusID_R(SEXP g_SEXP, SEXP pn_SEXP, SEXP pm_SEXP, SEXP count_SEXP,  
       dval[0]=(double)g[i+2*m];
       ng->oel[r]=slistInsert(ng->oel[r],(double)c,(void *)dval);
       ng->outdeg[r]++;
+
       if(!(*pdirected)){
         dval=(double *)R_alloc(1,sizeof(double));         /*Create iel element*/
         dval[0]=(double)g[i+2*m];
@@ -416,14 +417,13 @@ SEXP cycleCensusID_R(SEXP g_SEXP, SEXP pn_SEXP, SEXP pm_SEXP, SEXP count_SEXP,  
   return cycleListToVector(cyclelist);
 }
 
-/**
- * [cycleToVector returns a vector containing the cycle ids]
- * @param  cycle {Cycle}  [cycle of nodes]
- * @return {SEXP}         [vector of node ids]
+/** cycleToVector returns a vector containing the cycle ids.
+ *  @param  cycle {Cycle}  [cycle of nodes]
+ *  @return {SEXP}         [vector of node ids]
  */
-SEXP cycleToVector(Cycle *cycle){
+SEXP cycleToVector(Cycle *cycle)
+{
   int cycleLength = cycle -> size;
-
   SEXP result = PROTECT(allocVector(VECSXP, cycleLength));
 
   int i = 0;
@@ -439,14 +439,13 @@ SEXP cycleToVector(Cycle *cycle){
   return result;
 }
 
-/**
- * [cycleListToVector returns a vector of vectors of node ids]
- * @param  list {CycleList}   [list of cycles]
- * @return {SEXP}             [vector of vectors of node ids]
+/** cycleListToVector returns a vector of vectors of node ids.
+ *  @param  list {CycleList}   [list of cycles]
+ *  @return {SEXP}             [vector of vectors of node ids]
  */
-SEXP cycleListToVector(CycleList *list){
+SEXP cycleListToVector(CycleList *list)
+{
   int listLength = list -> size;
-
   SEXP result = PROTECT(allocVector(VECSXP, listLength));
 
   int i = 0;
@@ -457,7 +456,6 @@ SEXP cycleListToVector(CycleList *list){
     SET_VECTOR_ELT(result, i++, cycle);
     currentNode = currentNode -> next;
   }
-
   UNPROTECT(listLength + 1);
 
   return result;
@@ -477,4 +475,3 @@ SEXP cycleTestR(SEXP a){
 
   return cycleListToVector(list);
 }
-
