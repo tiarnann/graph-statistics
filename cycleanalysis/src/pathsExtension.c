@@ -429,10 +429,13 @@ SEXP cycleToVector(Cycle *cycle){
   int i = 0;
   Node * currentNode = cycle -> head;
   while(currentNode != NULL){
-    //Do something special
+    //Make a string (STRSXP type) from the currentNode id
     SEXP id = PROTECT(mkString(currentNode->id));
-    SET_VECTOR_ELT(result, i++, id);
+
+    //Add the node id to the vector at index i
+    SET_VECTOR_ELT(result, i, id);
     currentNode = currentNode -> next;
+    i++;
   }
   UNPROTECT(cycleLength);
 
@@ -447,20 +450,26 @@ SEXP cycleToVector(Cycle *cycle){
 SEXP cycleListToVector(CycleList *list){
   int listLength = list -> size;
 
-  SEXP result = PROTECT(allocVector(VECSXP, listLength));
+  //Create vector with the length of the passed cycle list
+  SEXP resultantVector = PROTECT(allocVector(VECSXP, listLength));
 
   int i = 0;
   CycleListNode * currentNode = list -> head;
+
   while(currentNode != NULL){
-    //Do something special with dat list
+    
+    //Convert current list to cycle
     SEXP cycle = cycleToVector(currentNode->list);
-    SET_VECTOR_ELT(result, i++, cycle);
+
+    //Add the new cycle to the vector at index i
+    SET_VECTOR_ELT(resultantVector, i, cycle);
     currentNode = currentNode -> next;
+    i++;
   }
 
   UNPROTECT(listLength + 1);
 
-  return result;
+  return resultantVector;
 }
 
 SEXP cycleTestR(SEXP a){
