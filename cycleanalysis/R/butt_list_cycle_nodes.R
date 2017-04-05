@@ -144,6 +144,59 @@ cycle.minimumEdgeWeight <- function(cycles, edgeMat, count) {
   minimumEdgeWeights
 }
 
+###
+# overlaps [Returns whether the comparate elements are contained within cycle]
+# @param  {list} cycle
+# @param  {list} comparate
+# @return {boolean}
+# NB: Only suitable for undirected graphs
+##
+cycle.overlaps <- function(cycle, comparate){
+  cycleLength <- length(cycle)
+  comparateLength <- length(comparate)
+
+  if(cycleLength == 0 || comparateLength == 0){
+    return(FALSE)
+  }else if(comparateLength > cycleLength){
+    return(FALSE)
+  }
+
+  for(i in 1:comparateLength){
+    contains <- comparate[[i]] %in% cycle
+    if(!contains){
+      return(FALSE)
+    }
+  }
+  return(TRUE)
+}
+
+###
+# cycle.findAllOverlappingCycles [Returns all overlapping cycles within passed list]
+# @param  {list} cycles 	[list of cycles]
+# @return {[list]}        	[list of lists containing indexes of the cycles which overlap at a given index
+# 							             e.g returnedList[[i]][[j]] = whether cycles[[i]] and cycles[[j]] overlap
+##
+cycle.findAllOverlappingCycles <- function(cycles){
+  result <- list()
+  len <- length(cycles)
+  for(i in 1:len){
+    result[[i]] <- list()
+    for(j in 1:len){
+      if(i != j){
+        overlapping <- overlaps(cycles[[j]], cycles[[i]])
+        result[[i]][j] = overlapping
+      }
+      else{
+        # When
+        result[[i]][j] = TRUE
+      }
+    }
+  }
+
+  return(result)
+}
+
+
 # kcycle.censusExtension - Compute the cycle census of a graph, along with additional cycle information
 #  on the inidence of cycles.
 # Parameters:   dat = adjacency matrix for the graph
@@ -213,3 +266,4 @@ kcycle.censusExtension<-function(dat, edges, maxlen=3,mode="digraph",tabulate.by
   out$mostImportantNodes  <- mostImportantNodes
   return (out)
 }
+
