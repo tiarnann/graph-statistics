@@ -344,7 +344,6 @@ SEXP cycleCensusID_R(SEXP g_SEXP, SEXP pn_SEXP, SEXP pm_SEXP, SEXP count_SEXP,  
   int *pcocycles = INTEGER_POINTER(pcocycles_SEXP);
   PROTECT(id_names_SEXP = coerceVector(id_names_SEXP, STRSXP));
 
-
   int i,r,c,n,m,id;
   double *dval;
   snaNet *ng;
@@ -377,14 +376,6 @@ SEXP cycleCensusID_R(SEXP g_SEXP, SEXP pn_SEXP, SEXP pm_SEXP, SEXP count_SEXP,  
     if((!IISNA(g[i+2*m]))&&((*pdirected)||(g[i]<g[i+m]))){
       r=g[i]-1;
       c=g[i+m]-1;
-
-      // *********** NB **************
-      // Node ID: g[i] Node ID: g[i+m]
-      // *********** NB **************
-      //Rprintf("ID:%d ID:%d\n",r+1,c+1);
-      // *********** NB **************
-      // Node ID: g[i] Node ID: g[i+m]
-      // *********** NB **************
 
       /*First, accumulate the cycles to be formed by the (r,c) edge*/
       edgewiseCycleCensusID(ng,r,c,count,cccount,*pmaxlen,*pdirected,
@@ -429,10 +420,10 @@ SEXP cycleToVector(Cycle *cycle)
   int i = 0;
   Node * currentNode = cycle -> head;
   while(currentNode != NULL){
-    //Make a string (STRSXP type) from the currentNode id
+    /*Make a string (STRSXP type) from the currentNode id*/
     SEXP id = PROTECT(mkString(currentNode->id));
 
-    //Add the node id to the vector at index i
+    /*Add the node id to the vector at index i*/
     SET_VECTOR_ELT(result, i, id);
     currentNode = currentNode -> next;
     i++;
@@ -450,18 +441,18 @@ SEXP cycleListToVector(CycleList *list)
 {
   int listLength = list -> size;
 
-  //Create vector with the length of the passed cycle list
+  /*Create vector with the length of the passed cycle list*/
   SEXP resultantVector = PROTECT(allocVector(VECSXP, listLength));
-  
+
   int i = 0;
   CycleListNode * currentNode = list -> head;
 
   while(currentNode != NULL){
-    
-    //Convert current list to cycle
+
+    /*Convert current list to cycle*/
     SEXP cycle = cycleToVector(currentNode->list);
 
-    //Add the new cycle to the vector at index i
+    /*Add the new cycle to the vector at index i*/
     SET_VECTOR_ELT(resultantVector, i, cycle);
     currentNode = currentNode -> next;
     i++;
