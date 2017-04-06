@@ -183,7 +183,7 @@ cycle.findAllOverlappingCycles <- function(cycles){
     result[[i]] <- list()
     for(j in 1:len){
       if(i != j){
-        overlapping <- overlaps(cycles[[j]], cycles[[i]])
+        overlapping <- cycle.overlaps(cycles[[j]], cycles[[i]])
         result[[i]][j] = overlapping
       }
       else{
