@@ -1,0 +1,1604 @@
+[
+    {
+        "definitions" : [
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 3,
+                "line" : 8,
+                "name" : "_Node",
+                "parent_name" : "",
+                "usr" : "c:@S@_Node"
+            },
+            {
+                "column" : 3,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 8,
+                "line" : 11,
+                "name" : "Node",
+                "parent_name" : "",
+                "usr" : "c:Cycle.h@112@T@Node"
+            },
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 3,
+                "line" : 13,
+                "name" : "_Cycle",
+                "parent_name" : "",
+                "usr" : "c:@S@_Cycle"
+            },
+            {
+                "column" : 3,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 8,
+                "line" : 17,
+                "name" : "Cycle",
+                "parent_name" : "",
+                "usr" : "c:Cycle.h@187@T@Cycle"
+            },
+            {
+                "column" : 7,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 6,
+                "line" : 24,
+                "name" : "createNode(char *)",
+                "parent_name" : "",
+                "usr" : "c:@F@createNode"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 6,
+                "line" : 36,
+                "name" : "createCycle",
+                "parent_name" : "",
+                "usr" : "c:@F@createCycle"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 6,
+                "line" : 49,
+                "name" : "appendNode(char *, Cycle *)",
+                "parent_name" : "",
+                "usr" : "c:@F@appendNode"
+            },
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 6,
+                "line" : 69,
+                "name" : "removeNode",
+                "parent_name" : "",
+                "usr" : "c:@F@removeNode"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 6,
+                "line" : 77,
+                "name" : "printCycle(Cycle *)",
+                "parent_name" : "",
+                "usr" : "c:@F@printCycle"
+            },
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 6,
+                "line" : 94,
+                "name" : "getCycleLength(Cycle *)",
+                "parent_name" : "",
+                "usr" : "c:@F@getCycleLength"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+                "kind" : 6,
+                "line" : 103,
+                "name" : "freeCycle(Cycle *)",
+                "parent_name" : "",
+                "usr" : "c:@F@freeCycle"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/Cycle.h",
+        "file_last_write" : 1488799034
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/CycleList.h",
+                "kind" : 3,
+                "line" : 7,
+                "name" : "_CycleListNode",
+                "parent_name" : "",
+                "usr" : "c:@S@_CycleListNode"
+            },
+            {
+                "column" : 3,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/CycleList.h",
+                "kind" : 8,
+                "line" : 10,
+                "name" : "CycleListNode",
+                "parent_name" : "",
+                "usr" : "c:CycleList.h@107@T@CycleListNode"
+            },
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/CycleList.h",
+                "kind" : 3,
+                "line" : 12,
+                "name" : "_CycleList",
+                "parent_name" : "",
+                "usr" : "c:@S@_CycleList"
+            },
+            {
+                "column" : 3,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/CycleList.h",
+                "kind" : 8,
+                "line" : 16,
+                "name" : "CycleList",
+                "parent_name" : "",
+                "usr" : "c:CycleList.h@219@T@CycleList"
+            },
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/CycleList.h",
+                "kind" : 6,
+                "line" : 19,
+                "name" : "createCycleListNode",
+                "parent_name" : "",
+                "usr" : "c:@F@createCycleListNode"
+            },
+            {
+                "column" : 12,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/CycleList.h",
+                "kind" : 6,
+                "line" : 30,
+                "name" : "createCycleList",
+                "parent_name" : "",
+                "usr" : "c:@F@createCycleList"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/CycleList.h",
+                "kind" : 6,
+                "line" : 43,
+                "name" : "appendCycle(Cycle *, CycleList *)",
+                "parent_name" : "",
+                "usr" : "c:@F@appendCycle"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/CycleList.h",
+                "kind" : 6,
+                "line" : 63,
+                "name" : "printCycleList(CycleList *)",
+                "parent_name" : "",
+                "usr" : "c:@F@printCycleList"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/CycleList.h",
+                "kind" : 6,
+                "line" : 80,
+                "name" : "freeCycleList(CycleList *)",
+                "parent_name" : "",
+                "usr" : "c:@F@freeCycleList"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/CycleList.h",
+        "file_last_write" : 1488799034
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 3,
+                "line" : 6,
+                "name" : "idNode",
+                "parent_name" : "",
+                "usr" : "c:@S@idNode"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 3,
+                "line" : 11,
+                "name" : "idList",
+                "parent_name" : "",
+                "usr" : "c:@S@idList"
+            },
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 6,
+                "line" : 18,
+                "name" : "createIDNode(char *)",
+                "parent_name" : "",
+                "usr" : "c:@F@createIDNode"
+            },
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 6,
+                "line" : 25,
+                "name" : "createIDList",
+                "parent_name" : "",
+                "usr" : "c:@F@createIDList"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 6,
+                "line" : 34,
+                "name" : "appendID(char *, struct idList *)",
+                "parent_name" : "",
+                "usr" : "c:@F@appendID"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 6,
+                "line" : 50,
+                "name" : "printIDList(struct idList *)",
+                "parent_name" : "",
+                "usr" : "c:@F@printIDList"
+            },
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 6,
+                "line" : 64,
+                "name" : "getListLength(struct idList *)",
+                "parent_name" : "",
+                "usr" : "c:@F@getListLength"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 3,
+                "line" : 80,
+                "name" : "listNode",
+                "parent_name" : "",
+                "usr" : "c:@S@listNode"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 3,
+                "line" : 85,
+                "name" : "listOfListNodes",
+                "parent_name" : "",
+                "usr" : "c:@S@listOfListNodes"
+            },
+            {
+                "column" : 18,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 6,
+                "line" : 93,
+                "name" : "createListNode(struct idList *)",
+                "parent_name" : "",
+                "usr" : "c:@F@createListNode"
+            },
+            {
+                "column" : 25,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 6,
+                "line" : 100,
+                "name" : "createListOfListNodes",
+                "parent_name" : "",
+                "usr" : "c:@F@createListOfListNodes"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 6,
+                "line" : 109,
+                "name" : "appendList(struct idList *, struct listOfListNodes *)",
+                "parent_name" : "",
+                "usr" : "c:@F@appendList"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 6,
+                "line" : 124,
+                "name" : "printListOfListNodes(struct listOfListNodes *)",
+                "parent_name" : "",
+                "usr" : "c:@F@printListOfListNodes"
+            },
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+                "kind" : 6,
+                "line" : 135,
+                "name" : "main(int, char **)",
+                "parent_name" : "",
+                "usr" : "c:@F@main"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/SingleLinkedList.c",
+        "file_last_write" : 1491472612
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.c",
+                "kind" : 6,
+                "line" : 26,
+                "name" : "bicomponentRecurse(snaNet *, element *, element *, int *, int *, int *, int *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@bicomponentRecurse"
+            },
+            {
+                "column" : 12,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.c",
+                "kind" : 6,
+                "line" : 126,
+                "name" : "cliqueFirstChild(snaNet *, slelement *)",
+                "parent_name" : "",
+                "usr" : "c:@F@cliqueFirstChild"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.c",
+                "kind" : 6,
+                "line" : 165,
+                "name" : "cliqueRecurse(snaNet *, slelement *, int, element **, double *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@cliqueRecurse"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.c",
+                "kind" : 6,
+                "line" : 245,
+                "name" : "cutpointUndirRecurse(snaNet *, int *, int *, int *, int, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@cutpointUndirRecurse"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.c",
+                "kind" : 6,
+                "line" : 274,
+                "name" : "bicomponents_R(SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@bicomponents_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.c",
+                "kind" : 6,
+                "line" : 348,
+                "name" : "cliques_R(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@cliques_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.c",
+                "kind" : 6,
+                "line" : 504,
+                "name" : "cutpointsDir_R(double *, int *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@cutpointsDir_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.c",
+                "kind" : 6,
+                "line" : 580,
+                "name" : "cutpointsUndir_R(double *, int *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@cutpointsUndir_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.c",
+                "kind" : 6,
+                "line" : 609,
+                "name" : "kcores_R(double *, int *, int *, double *, int *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@kcores_R"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.c",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/cohesion.h",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 12,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 24,
+                "name" : "BFS(snaNet *, int *, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@BFS"
+            },
+            {
+                "column" : 10,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 66,
+                "name" : "BFS_unord(snaNet *, int *, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@BFS_unord"
+            },
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 115,
+                "name" : "numStrongComponents(snaNet *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@numStrongComponents"
+            },
+            {
+                "column" : 12,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 131,
+                "name" : "strongComponentByVertex(snaNet *, int *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@strongComponentByVertex"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 162,
+                "name" : "strongComponents(snaNet *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@strongComponents"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 193,
+                "name" : "strongComponentsRecurse(snaNet *, int *, int, int *, int *, int *, element *)",
+                "parent_name" : "",
+                "usr" : "c:@F@strongComponentsRecurse"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 229,
+                "name" : "undirComponents(snaNet *)",
+                "parent_name" : "",
+                "usr" : "c:@F@undirComponents"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 250,
+                "name" : "undirComponentsRecurse(snaNet *, int, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@undirComponentsRecurse"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 263,
+                "name" : "undirComponentsNoRecurse(snaNet *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@undirComponentsNoRecurse"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 297,
+                "name" : "component_dist_R(double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@component_dist_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 344,
+                "name" : "compsizes_R(double *, int *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@compsizes_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 373,
+                "name" : "reachability_R(SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@reachability_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+                "kind" : 6,
+                "line" : 427,
+                "name" : "undirComponents_R(double *, int *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@undirComponents_R"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.c",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/components.h",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/geodist.c",
+                "kind" : 6,
+                "line" : 23,
+                "name" : "spsp(int, snaNet *, double *, double *, element **, int *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@spsp"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/geodist.c",
+                "kind" : 6,
+                "line" : 87,
+                "name" : "spsp_val(int, snaNet *, double *, double *, element **, int *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@spsp_val"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/geodist.c",
+                "kind" : 6,
+                "line" : 188,
+                "name" : "geodist_adj_R(double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@geodist_adj_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/geodist.c",
+                "kind" : 6,
+                "line" : 244,
+                "name" : "geodist_R(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@geodist_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/geodist.c",
+                "kind" : 6,
+                "line" : 384,
+                "name" : "geodist_val_R(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@geodist_val_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/geodist.c",
+                "kind" : 6,
+                "line" : 556,
+                "name" : "maxflow_EK_R(double *, int *, int *, int *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@maxflow_EK_R"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/geodist.c",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/geodist.h",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/gli.c",
+                "kind" : 6,
+                "line" : 24,
+                "name" : "brokerage_R(double *, int *, int *, int *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@brokerage_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/gli.c",
+                "kind" : 6,
+                "line" : 71,
+                "name" : "connectedness_R(double *, int *, int *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@connectedness_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/gli.c",
+                "kind" : 6,
+                "line" : 99,
+                "name" : "lubness_con_R(double *, double *, int *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@lubness_con_R"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/gli.c",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/gli.h",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+                "kind" : 6,
+                "line" : 28,
+                "name" : "angdist(double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@angdist"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+                "kind" : 6,
+                "line" : 47,
+                "name" : "poldist(double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@poldist"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+                "kind" : 6,
+                "line" : 54,
+                "name" : "pollinedist(double, double, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@pollinedist"
+            },
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+                "kind" : 6,
+                "line" : 67,
+                "name" : "poledgecross(double, double, double, double, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@poledgecross"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+                "kind" : 6,
+                "line" : 125,
+                "name" : "gplot_layout_fruchtermanreingold_R(double *, double *, double *, int *, double *, double *, double *, double *, int *, double *, double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@gplot_layout_fruchtermanreingold_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+                "kind" : 6,
+                "line" : 326,
+                "name" : "gplot_layout_fruchtermanreingold_old_R(double *, int *, int *, int *, double *, double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@gplot_layout_fruchtermanreingold_old_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+                "kind" : 6,
+                "line" : 407,
+                "name" : "gplot_layout_kamadakawai_R(int *, int *, double *, double *, double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@gplot_layout_kamadakawai_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+                "kind" : 6,
+                "line" : 452,
+                "name" : "gplot_layout_target_R(int *, double *, int *, double *, double *, int *, double *, double *, double *, double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@gplot_layout_target_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+                "kind" : 6,
+                "line" : 657,
+                "name" : "gplot3d_layout_fruchtermanreingold_R(double *, int *, int *, int *, double *, double *, double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@gplot3d_layout_fruchtermanreingold_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+                "kind" : 6,
+                "line" : 750,
+                "name" : "gplot3d_layout_kamadakawai_R(double *, int *, double *, double *, double *, double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@gplot3d_layout_kamadakawai_R"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.c",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/layout.h",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 23,
+                "name" : "bn_lpka(long, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpka"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 48,
+                "name" : "bn_lpkm(long, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpkm"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 74,
+                "name" : "bn_lpkn(long, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpkn"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 100,
+                "name" : "bn_lpt_M(long, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_M"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 105,
+                "name" : "bn_lpt_a(long, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_a"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 110,
+                "name" : "bn_lpt_N(long, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_N"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 122,
+                "name" : "bn_lpt_Mp1(long, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_Mp1"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 127,
+                "name" : "bn_lpt_ap1(long, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_ap1"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 132,
+                "name" : "bn_lpt_Np1(long, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_Np1"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 137,
+                "name" : "bn_lpt_M1(double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_M1"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 142,
+                "name" : "bn_lpt_a1(double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_a1"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 147,
+                "name" : "bn_lpt_N1(double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_N1"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 152,
+                "name" : "bn_lpt_Sr(double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_Sr"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 157,
+                "name" : "bn_lpt_1mSr(double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt_1mSr"
+            },
+            {
+                "column" : 8,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 162,
+                "name" : "bn_lpt(int, int, int, int, int, int, long, long, long, double, double, double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpt"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 434,
+                "name" : "bn_dyadstats_R(int *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_dyadstats_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 472,
+                "name" : "bn_triadstats_R(int *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_triadstats_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 495,
+                "name" : "bn_lpl_dyad_R(double *, double *, double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpl_dyad_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 519,
+                "name" : "bn_lpl_triad_R(int *, double *, double *, double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_lpl_triad_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+                "kind" : 6,
+                "line" : 544,
+                "name" : "bn_ptriad_R(double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_ptriad_R"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.c",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/likelihood.h",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/nli.c",
+                "kind" : 6,
+                "line" : 24,
+                "name" : "betweenness_R(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@betweenness_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/nli.c",
+                "kind" : 6,
+                "line" : 221,
+                "name" : "degree_R(double *, int *, int *, int *, int *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@degree_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/nli.c",
+                "kind" : 6,
+                "line" : 252,
+                "name" : "evcent_R(double *, int *, int *, double *, double *, int *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@evcent_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/nli.c",
+                "kind" : 6,
+                "line" : 310,
+                "name" : "gilschmidt_R(double *, int *, int *, double *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@gilschmidt_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/nli.c",
+                "kind" : 6,
+                "line" : 341,
+                "name" : "stresscent_R(double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@stresscent_R"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/nli.c",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/nli.h",
+        "file_last_write" : 1487862810
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/paths.c",
+                "kind" : 6,
+                "line" : 26,
+                "name" : "edgewisePathRecurse(snaNet *, int, int, int, int *, int, int *, int, double *, double *, double *, int, int, int, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@edgewisePathRecurse"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/paths.c",
+                "kind" : 6,
+                "line" : 208,
+                "name" : "edgewiseCycleCensus(snaNet *, int, int, double *, double *, int, int, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@edgewiseCycleCensus"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/paths.c",
+                "kind" : 6,
+                "line" : 276,
+                "name" : "dyadPathCensus(snaNet *, int, int, double *, double *, double *, int, int, int, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@dyadPathCensus"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/paths.c",
+                "kind" : 6,
+                "line" : 354,
+                "name" : "cycleCensus_R(int *, int *, int *, double *, double *, int *, int *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@cycleCensus_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/paths.c",
+                "kind" : 6,
+                "line" : 420,
+                "name" : "pathCensus_R(double *, int *, int *, double *, double *, double *, int *, int *, int *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@pathCensus_R"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/paths.c",
+        "file_last_write" : 1488489645
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/paths.h",
+        "file_last_write" : 1487862811
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/pathsExtension.c",
+                "kind" : 6,
+                "line" : 18,
+                "name" : "addListToCycleList(char **, int, CycleList *)",
+                "parent_name" : "",
+                "usr" : "c:@F@addListToCycleList"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/pathsExtension.c",
+                "kind" : 6,
+                "line" : 35,
+                "name" : "edgewisePathRecurseID(snaNet *, int, int, int, int *, int, int *, int, double *, double *, double *, int, int, int, int, int, char **, int, CycleList *, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@edgewisePathRecurseID"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/pathsExtension.c",
+                "kind" : 6,
+                "line" : 228,
+                "name" : "edgewiseCycleCensusID(snaNet *, int, int, double *, double *, int, int, int, int, CycleList *, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@edgewiseCycleCensusID"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/pathsExtension.c",
+                "kind" : 6,
+                "line" : 320,
+                "name" : "cycleCensusID_R(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@cycleCensusID_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/pathsExtension.c",
+                "kind" : 6,
+                "line" : 415,
+                "name" : "cycleToVector(Cycle *)",
+                "parent_name" : "",
+                "usr" : "c:@F@cycleToVector"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/pathsExtension.c",
+                "kind" : 6,
+                "line" : 440,
+                "name" : "cycleListToVector(CycleList *)",
+                "parent_name" : "",
+                "usr" : "c:@F@cycleListToVector"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/pathsExtension.c",
+                "kind" : 6,
+                "line" : 465,
+                "name" : "cycleTestR(SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@cycleTestR"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/pathsExtension.c",
+        "file_last_write" : 1491419200
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/pathsExtension.h",
+        "file_last_write" : 1489424671
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/randomgraph.c",
+                "kind" : 6,
+                "line" : 24,
+                "name" : "bn_cftp_R(int *, int *, double *, double *, double *, double *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_cftp_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/randomgraph.c",
+                "kind" : 6,
+                "line" : 238,
+                "name" : "bn_mcmc_R(int *, double *, double *, double *, int *, double *, double *, double *, double *, double *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_mcmc_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/randomgraph.c",
+                "kind" : 6,
+                "line" : 347,
+                "name" : "bn_mcmc_old_R(int *, double *, double *, double *, int *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@bn_mcmc_old_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/randomgraph.c",
+                "kind" : 6,
+                "line" : 452,
+                "name" : "rgbern_R(SEXP, SEXP, SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@rgbern_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/randomgraph.c",
+                "kind" : 6,
+                "line" : 603,
+                "name" : "udrewire_R(double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@udrewire_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/randomgraph.c",
+                "kind" : 6,
+                "line" : 647,
+                "name" : "wsrewire_R(double *, double *, double *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@wsrewire_R"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/randomgraph.c",
+        "file_last_write" : 1487862811
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/randomgraph.h",
+        "file_last_write" : 1487862811
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/triads.c",
+                "kind" : 6,
+                "line" : 23,
+                "name" : "triad_classify(int *, int, int, int, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@triad_classify"
+            },
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/triads.c",
+                "kind" : 6,
+                "line" : 115,
+                "name" : "triad_classify_el(snaNet *, int, int, int, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@triad_classify_el"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/triads.c",
+                "kind" : 6,
+                "line" : 230,
+                "name" : "triad_classify_R(int *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@triad_classify_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/triads.c",
+                "kind" : 6,
+                "line" : 243,
+                "name" : "transitivity_R(double *, int *, int *, double *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@transitivity_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/triads.c",
+                "kind" : 6,
+                "line" : 340,
+                "name" : "triad_census_R(double *, int *, int *, double *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@triad_census_R"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/triads.c",
+        "file_last_write" : 1487862811
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/triads.h",
+        "file_last_write" : 1487862811
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 26,
+                "name" : "aggarray3d_R(double *, double *, double *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@aggarray3d_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 43,
+                "name" : "dyadcode_R(double *, int *, int *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@dyadcode_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 58,
+                "name" : "logadd_R(double *, int *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@logadd_R"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 73,
+                "name" : "logsub_R(double *, double *, int *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@logsub_R"
+            },
+            {
+                "column" : 9,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 85,
+                "name" : "adjMatTosnaNet(double *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@adjMatTosnaNet"
+            },
+            {
+                "column" : 9,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 129,
+                "name" : "elMatTosnaNet(double *, int *, int *)",
+                "parent_name" : "",
+                "usr" : "c:@F@elMatTosnaNet"
+            },
+            {
+                "column" : 12,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 177,
+                "name" : "snaFirstEdge(snaNet *, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@snaFirstEdge"
+            },
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 195,
+                "name" : "snaIsAdjacent(int, int, snaNet *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@snaIsAdjacent"
+            },
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 256,
+                "name" : "isInSList(slelement *, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@isInSList"
+            },
+            {
+                "column" : 12,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 276,
+                "name" : "slistDelete(slelement *, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@slistDelete"
+            },
+            {
+                "column" : 12,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 327,
+                "name" : "slistInsert(slelement *, double, void *)",
+                "parent_name" : "",
+                "usr" : "c:@F@slistInsert"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 381,
+                "name" : "slistPrint(slelement *)",
+                "parent_name" : "",
+                "usr" : "c:@F@slistPrint"
+            },
+            {
+                "column" : 12,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 405,
+                "name" : "slistSearch(slelement *, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@slistSearch"
+            },
+            {
+                "column" : 5,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 427,
+                "name" : "isInList(element *, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@isInList"
+            },
+            {
+                "column" : 10,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 441,
+                "name" : "listInsert(element *, double, void *)",
+                "parent_name" : "",
+                "usr" : "c:@F@listInsert"
+            },
+            {
+                "column" : 9,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 475,
+                "name" : "pop(element *)",
+                "parent_name" : "",
+                "usr" : "c:@F@pop"
+            },
+            {
+                "column" : 10,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 502,
+                "name" : "push(element *, double, void *)",
+                "parent_name" : "",
+                "usr" : "c:@F@push"
+            },
+            {
+                "column" : 10,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 524,
+                "name" : "stacklen(element *)",
+                "parent_name" : "",
+                "usr" : "c:@F@stacklen"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 537,
+                "name" : "isinstack(element *, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@isinstack"
+            },
+            {
+                "column" : 9,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 550,
+                "name" : "stackdel(element *, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@stackdel"
+            },
+            {
+                "column" : 9,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 585,
+                "name" : "dequeue(element *)",
+                "parent_name" : "",
+                "usr" : "c:@F@dequeue"
+            },
+            {
+                "column" : 10,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 613,
+                "name" : "enqueue(element *, double, void *)",
+                "parent_name" : "",
+                "usr" : "c:@F@enqueue"
+            },
+            {
+                "column" : 10,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 635,
+                "name" : "queuelen(element *)",
+                "parent_name" : "",
+                "usr" : "c:@F@queuelen"
+            },
+            {
+                "column" : 6,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 648,
+                "name" : "isinqueue(element *, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@isinqueue"
+            },
+            {
+                "column" : 9,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+                "kind" : 6,
+                "line" : 661,
+                "name" : "queuedel(element *, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@queuedel"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.c",
+        "file_last_write" : 1487862811
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 3,
+                "line" : 38,
+                "name" : "elementtype",
+                "parent_name" : "",
+                "usr" : "c:@S@elementtype"
+            },
+            {
+                "column" : 3,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 8,
+                "line" : 42,
+                "name" : "element",
+                "parent_name" : "",
+                "usr" : "c:utils.h@1097@T@element"
+            },
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 3,
+                "line" : 60,
+                "name" : "slelementtype",
+                "parent_name" : "",
+                "usr" : "c:@S@slelementtype"
+            },
+            {
+                "column" : 3,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 8,
+                "line" : 65,
+                "name" : "slelement",
+                "parent_name" : "",
+                "usr" : "c:utils.h@2732@T@slelement"
+            },
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 3,
+                "line" : 73,
+                "name" : "snaNettype",
+                "parent_name" : "",
+                "usr" : "c:@S@snaNettype"
+            },
+            {
+                "column" : 3,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 8,
+                "line" : 76,
+                "name" : "snaNet",
+                "parent_name" : "",
+                "usr" : "c:utils.h@3160@T@snaNet"
+            },
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 3,
+                "line" : 89,
+                "name" : "dtelementtype",
+                "parent_name" : "",
+                "usr" : "c:@S@dtelementtype"
+            },
+            {
+                "column" : 3,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 8,
+                "line" : 94,
+                "name" : "dtelement",
+                "parent_name" : "",
+                "usr" : "c:utils.h@3914@T@dtelement"
+            },
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 3,
+                "line" : 98,
+                "name" : "vlisttype",
+                "parent_name" : "",
+                "usr" : "c:@S@vlisttype"
+            },
+            {
+                "column" : 3,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 8,
+                "line" : 101,
+                "name" : "vlist",
+                "parent_name" : "",
+                "usr" : "c:utils.h@4124@T@vlist"
+            },
+            {
+                "column" : 16,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 3,
+                "line" : 103,
+                "name" : "vcelltype",
+                "parent_name" : "",
+                "usr" : "c:@S@vcelltype"
+            },
+            {
+                "column" : 3,
+                "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+                "kind" : 8,
+                "line" : 108,
+                "name" : "vcell",
+                "parent_name" : "",
+                "usr" : "c:utils.h@4205@T@vcell"
+            }
+        ],
+        "file" : "C:/Users/Paul/Documents/CycleAnalysisLib/src/utils.h",
+        "file_last_write" : 1487862811
+    }
+]

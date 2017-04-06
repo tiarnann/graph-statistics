@@ -1,0 +1,17 @@
+Package: CycleAnalysisLib
+Type: Package
+Title: Extracts various statistics about cyclic patterns within undirected network graphs.
+Version: 0.1.0
+Author: Dylan Walsh, Tíarnán McGrath, Sean McGroarty, Joanna Whittam, Rory Saunders, Paul Byrne, Carter T. Butts
+Maintainer: 
+Description: 
+    A library which provides functions to achieve the following information about undirected network graphs:
+	- Extract cycle counts from directed network graphs
+	- Extract a list of node ids within each cycle of the graph
+	- Calculate total edge weight for each cycle in the graph
+	- Calculate minimum edge weight for each cycle in the graph
+	- Assess overlapping of cycles in the network
+	- Identify the three most important (most common) nodes
+License: 
+Encoding: UTF-8
+LazyData: true

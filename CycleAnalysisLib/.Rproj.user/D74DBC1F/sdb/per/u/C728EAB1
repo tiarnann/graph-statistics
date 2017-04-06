@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#library('cycleanalysis')\nlibrary('igraph')\nlibrary('statnet')\n\n\n# Read data from .csv files\nnodes <- read.csv(\"Dataset_nodes_200_500.csv\", header=T, as.is=T)\nedges <- read.csv(\"Dataset_edges_200_500.csv\", header=T, as.is=T)\n\n# Manipulate data into correct format\nnet <- graph_from_data_frame(d=edges, vertices=nodes, directed=T)\nadjacencyMat <- get.adjacency(net, sparse=FALSE)\nedgeMat <- as.matrix(edges, sparse=FALSE)\n\n# Plot the graph\nplot(net, edge.arrow.size=0.01, edge.arrow.width=0.001, edge.color=\"lightpink\", vertex.size=2, vertex.color=\"white\", vertex.label.color=\"black\", vertex.label.cex=0.6)\n\n# Run kcycle.censusExtension using the adjacency matrix for the graph\ncc <- kcycle.censusExtension(adjacencyMat, edges, maxlen=5, tabulate.by.vertex = FALSE, cycle.comembership = \"bylength\")\nmessage(as.character(length(cc$cycles)), \" Cycles Found.\")\n\na<-cc$minimumEdgeWeight\nb<-cc$edgeWeightTotal\nc<-cc$mostImportantNodes\nd<-cc$cyclecounts\n",
+    "created" : 1491473619467.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "722305731",
+    "id" : "C728EAB1",
+    "lastKnownWriteTime" : 31244048835477601,
+    "last_content_update" : 1491473625174,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
